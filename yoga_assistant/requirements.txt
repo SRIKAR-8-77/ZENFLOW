@@ -1,28 +1,27 @@
-# ---- Core Machine Learning & Data ----
-tensorflow
-keras
-scikit-learn
-python-multipart
-pandas
-numpy
-joblib
-protobuf
+# ---- Core Web & API ----
 uvicorn
 fastapi
-# ---- Local Database & Auth ----
+gunicorn
+
+# ---- Machine Learning & Computer Vision ----
+tensorflow-cpu
+keras
+scikit-learn
+opencv-python-headless
+mediapipe
+numpy
+pandas
+joblib
+protobuf
+
+# ---- Database & Auth ----
 sqlalchemy
 passlib[bcrypt]
 python-jose[cryptography]
-# ---- Computer Vision ----
-opencv-python-headless
-mediapipe
-transformers
-tf-keras
 python-dotenv
-torch
-tokenizers
-# ---- Web App & Streaming ----
+python-multipart
+
+# ---- AI Agent (Coach) ----
 crewai
-drill
-pydantic
 langchain_google_genai
+pydantic
