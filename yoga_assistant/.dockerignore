@@ -1,0 +1,17 @@
+.git
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.db
+.sqlite
+data/
+yoga_assistant/yoga_app.db
+YOGA_NOTEBOOK/yoga_pose_features.csv
+yoga_assistant/YOGA_NOTEBOOK/yoga_pose_features.csv
+*.csv
+*.ipynb
+.venv
+venv
+node_modules

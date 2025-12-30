@@ -10,7 +10,6 @@ scikit-learn
 opencv-python-headless
 mediapipe
 numpy
-pandas
 joblib
 protobuf
 
