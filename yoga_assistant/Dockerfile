@@ -16,8 +16,11 @@ RUN mkdir -p /app/data
 # Copy the requirements file into the container
 COPY requirements.txt .
 
+# Copy uv binary for fast installation
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .
