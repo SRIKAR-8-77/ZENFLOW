@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Local development settings
+.env
+.env.local
+
+# Model files and data
+*.h5
+*.keras
+*.pkl
+*.pb
+
+# Media files
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# Logs
+*.log
+
+# Service account keys and sensitive data
+serviceAccountKey.json
+
+# OS specific
+.DS_Store
+Thumbs.db

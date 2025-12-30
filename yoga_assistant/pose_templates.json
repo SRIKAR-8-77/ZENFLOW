@@ -1,0 +1,1741 @@
+{
+  "adho_mukha_svanasana": {
+    "description": "Ground your presence and lengthen your spine. This foundational inversion builds strength and clarity while calming the mind.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 124,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 112,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 137,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 163,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 60,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 61,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 174,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 171,
+        "threshold": 10
+      }
+    }
+  },
+  "adho_mukha_vrksasana": {
+    "description": "Master the art of perspective. This powerful handstand demands absolute focus, core stability, and the courage to find balance in reverse.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 79,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 154,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 161,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 125,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 145,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 145,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 124,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 140,
+        "threshold": 10
+      }
+    }
+  },
+  "alanasana": {
+    "description": "Find stability in transition. This high lunge builds fire in the legs and opens the heart, bridging strength with poise.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 122,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 178,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 157,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 107,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 126,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 145,
+        "threshold": 10
+      }
+    }
+  },
+  "anjaneyasana": {
+    "description": "Deepen your devotion. This low lunge stretches the hips and elevates the spirit, inviting a sense of expansive grace.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 164,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 177,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 124,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 80,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 137,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 71,
+        "threshold": 10
+      }
+    }
+  },
+  "ardha_chandrasana": {
+    "description": "Embrace the phases of balance. Half Moon pose challenges your stability and expands your reach, mirroring the radiant pull of the lunar cycle.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 122,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 93,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 171,
+        "threshold": 10
+      }
+    }
+  },
+  "ardha_matsyendrasana": {
+    "description": "Wring out the old, invite the new. This deep seated twist rejuvenates the spine and aids digestion, promoting internal clarity.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 128,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 150,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 43,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 31,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 103,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 57,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 41,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 54,
+        "threshold": 10
+      }
+    }
+  },
+  "ardha_navasana": {
+    "description": "Ignite your inner fire. Half Boat pose isolates core strength, demanding resilience and steady breath to maintain your 'vessel' of presence.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 68,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 142,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 86,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 90,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 169,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 163,
+        "threshold": 10
+      }
+    }
+  },
+  "ardha_pincha_mayurasana": {
+    "description": "Find strength in the inverted 'V'. Dolphin pose prepares the upper body for inversions while grounding the forearms in steady resolve.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 111,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 78,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 153,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 167,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 59,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 74,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 148,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 160,
+        "threshold": 10
+      }
+    }
+  },
+  "ashta_chandrasana": {
+    "description": "Reach for the heavens while grounding in the earth. Eight-Point Crescent Lunge builds intense leg strength and heart-opening expansiveness.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 154,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 178,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 103,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 88,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 151,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 79,
+        "threshold": 10
+      }
+    }
+  },
+  "baddha_konasana": {
+    "description": "Open the gateways of the hips. Bound Angle pose encourages seated stillness and deep internal reflection through gentle opening.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 168,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 160,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 55,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 52,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 51,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 45,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 75,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 65,
+        "threshold": 10
+      }
+    }
+  },
+  "bakasana": {
+    "description": "Take flight on the strength of your focus. Crow pose teaches that lightness comes from deep core activation and overcoming the fear of falling forward.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 107,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 109,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 77,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 74,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 19,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 34,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 66,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 67,
+        "threshold": 10
+      }
+    }
+  },
+  "balasana": {
+    "description": "Surrender to the earth. Child's pose is the ultimate sanctuary for rest, grounding your third eye and calming the nervous system.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 130,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 137,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 165,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 37,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 35,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 55,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 64,
+        "threshold": 10
+      }
+    }
+  },
+  "bitilasana": {
+    "description": "Inhale and arch into the flow. Cow pose warms the spine and opens the chest, synchronized perfectly with the rhythm of your breath.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 95,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 78,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 83,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 110,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 66,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 77,
+        "threshold": 10
+      }
+    }
+  },
+  "camatkarasana": {
+    "description": "Unfold into the 'Wild Thing'. This ecstatic backbend opens the heart and side body, inviting a sense of joy and uninhibited expression.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 168,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 142,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 120,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 135,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 113,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 135,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 137,
+        "threshold": 10
+      }
+    }
+  },
+  "dhanurasana": {
+    "description": "Arch into the strength of your resolve. Bow pose opens the entire front body, using the legs to pull the heart open in a majestic arc.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 128,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 165,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 73,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 76,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 101,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 105,
+        "threshold": 10
+      }
+    }
+  },
+  "eka_pada_rajakapotasana": {
+    "description": "Patiently open the heart and hips. One-Legged King Pigeon is a deep journey into stored emotion and physical release.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 68,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 93,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 159,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 113,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 93,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 40,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 58,
+        "threshold": 10
+      }
+    }
+  },
+  "garudasana": {
+    "description": "Find steady focus amidst the knots. Eagle pose squeezes the joints to release tension, demanding a singular point of focus for absolute balance.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 84,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 63,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 103,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 103,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 115,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 126,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 102,
+        "threshold": 10
+      }
+    }
+  },
+  "halasana": {
+    "description": "Fold into the quiet of the plow. This inversion stretches the spine and fosters a deep sense of internal peace and introspection.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 136,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 89,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 89,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 55,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 61,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 156,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 170,
+        "threshold": 10
+      }
+    }
+  },
+  "hanumanasana": {
+    "description": "Embrace the leap of faith. The Monkey pose (Splits) demands patient dedication and deep hip opening, symbolizing the leap across the ocean of doubt.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 140,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 165,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 142,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 95,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 173,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 116,
+        "threshold": 10
+      }
+    }
+  },
+  "malasana": {
+    "description": "Ground deeply in the primal squat. Garland pose opens the hips and lower back, connecting you to the earth's steady energy.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 113,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 105,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 45,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 39,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 71,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 67,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 35,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 32,
+        "threshold": 10
+      }
+    }
+  },
+  "marjaryasana": {
+    "description": "Exhale and round into the stretch. Cat pose releases spinal tension and fosters awareness of the back body and internal core.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 146,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 88,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 77,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 105,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 114,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 75,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 85,
+        "threshold": 10
+      }
+    }
+  },
+  "navasana": {
+    "description": "Navigate the tides with core strength. Full Boat pose creates a perfect V-shape, demanding total concentration and abdominal power.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 133,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 45,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 59,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 66,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 74,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 164,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 176,
+        "threshold": 10
+      }
+    }
+  },
+  "padmasana": {
+    "description": "The seat of enlightenment. Lotus pose is the pinnacle of seated meditation, locking the legs to allow a long, steady spine for deep breathing.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 125,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 51,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 53,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 107,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 106,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 32,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 24,
+        "threshold": 10
+      }
+    }
+  },
+  "parsva_virabhadrasana": {
+    "description": "The humble side of the warrior. This variation adds a side-stretch to the strength of Warrior II, expanding the reach of your presence.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 153,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 170,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 111,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 50,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 113,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 91,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 157,
+        "threshold": 10
+      }
+    }
+  },
+  "parsvottanasana": {
+    "description": "Fold over the strength of your foundation. Pyramid pose provides an intense stretch for the hamstrings while demanding alignment and focus.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 146,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 153,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 161,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 156,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 23,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 83,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 176,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 169,
+        "threshold": 10
+      }
+    }
+  },
+  "paschimottanasana": {
+    "description": "The deep bow to the self. This seated forward fold encourages surrender, quieted thoughts, and a deep stretch for the entire back body.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 116,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 100,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 84,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 88,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 39,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 48,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 161,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 172,
+        "threshold": 10
+      }
+    }
+  },
+  "phalakasana": {
+    "description": "The foundation of stability. Plank pose builds core heat and upper body endurance, serving as the steady midpoint of any physical flow.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 154,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 73,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 79,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 140,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 161,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 174,
+        "threshold": 10
+      }
+    }
+  },
+  "pincha_mayurasana": {
+    "description": "Rise on your forearms like a peacock. This advanced inversion builds incredible shoulder strength and tests your equilibrium on a broad base.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 102,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 100,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 114,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 151,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 143,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 147,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 169,
+        "threshold": 10
+      }
+    }
+  },
+  "salamba_bhujangasana": {
+    "description": "The gentle rise of the Sphinx. Supported on the forearms, this pose offers a mild backbend that rejuvenates the spine and opens the heart space.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 89,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 95,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 86,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 56,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 145,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 147,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 164,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 160,
+        "threshold": 10
+      }
+    }
+  },
+  "salamba_sarvangasana": {
+    "description": "The mother of asanas. Shoulder Stand reverses the flow of gravity, soothing the nervous system and rejuvenating every cell in the body.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 119,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 87,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 26,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 28,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 52,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 55,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 90,
+        "threshold": 10
+      }
+    }
+  },
+  "setu_bandha_sarvangasana": {
+    "description": "Bridge the gap between strength and flexibility. This backbend opens the chest and strengthens the glutes, creating a resilient arc of energy.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 164,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 63,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 159,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 61,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 62,
+        "threshold": 10
+      }
+    }
+  },
+  "sivasana": {
+    "description": "The art of being, not doing. Corpse pose is the essential final integration, where the practice is absorbed in total stillness and surrender.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 172,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 90,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 79,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 64,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 142,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 133,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 150,
+        "threshold": 10
+      }
+    }
+  },
+  "supta_kapotasana": {
+    "description": "Reclined release. The Supine Pigeon offers the same hip-opening benefits as its seated cousin but with the grounding support of the floor.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 119,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 56,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 60,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 92,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 62,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 69,
+        "threshold": 10
+      }
+    }
+  },
+  "trikonasana": {
+    "description": "Express yourself in three dimensions. Triangle pose creates space in the side body and find stability through geometric precision.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 147,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 106,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 119,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 73,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 173,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 146,
+        "threshold": 10
+      }
+    }
+  },
+  "upavistha_konasana": {
+    "description": "Expand your reach in seated stillness. This wide-angle seated fold opens the inner legs and encourages a long, peaceful spine.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 150,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 90,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 94,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 46,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 41,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 169,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 173,
+        "threshold": 10
+      }
+    }
+  },
+  "urdhva_dhanurasana": {
+    "description": "The radiant Wheel. This deep backbend ignites the spirit, opens the heart fully, and strengthens the entire back body in a glorious arc.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 165,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 167,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 114,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 68,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 102,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 137,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 141,
+        "threshold": 10
+      }
+    }
+  },
+  "urdhva_mukha_svsnssana": {
+    "description": "Rise with the breath. Upward Facing Dog opens the chest and strengthens the arms, inviting a sense of renewed vitality and presence.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 122,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 168,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 32,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 78,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 133,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 161,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 170,
+        "threshold": 10
+      }
+    }
+  },
+  "ustrasana": {
+    "description": "Open the heart to the sky. Camel pose is a courageous backbend that addresses front-body tightness and encourages emotional release.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 128,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 171,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 87,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 107,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 87,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 99,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 114,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 101,
+        "threshold": 10
+      }
+    }
+  },
+  "utkatasana": {
+    "description": "Find the power in the 'Chair'. This fierce pose builds heat in the legs and core, teaching you to find stillness within intensity.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 138,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 128,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 155,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 165,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 90,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 85,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 98,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 94,
+        "threshold": 10
+      }
+    }
+  },
+  "uttanasana": {
+    "description": "The deep release of the forward fold. Let gravity lengthen the spine and quiet the mind as you fold toward your own foundation.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 109,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 111,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 108,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 104,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 38,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 50,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 167,
+        "threshold": 10
+      }
+    }
+  },
+  "utthita_hasta_padangusthasana": {
+    "description": "The test of extended balance. This pose demands leg strength, core focus, and a steady gaze as you reach for the toe in standing.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 158,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 136,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 119,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 111,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 125,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 91,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 110,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 162,
+        "threshold": 10
+      }
+    }
+  },
+  "utthita_parsvakonasana": {
+    "description": "Extend the line of your energy. Extended Side Angle creates a long line from heel to fingertip, building strength and opening the side body.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 151,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 159,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 68,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 159,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 27,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 104,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 124,
+        "threshold": 10
+      }
+    }
+  },
+  "vasisthana": {
+    "description": "Balance on the edge of your strength. Side Plank builds profound core stability and arm power, demanding a steady mind on a narrow base.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 144,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 158,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 132,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 83,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 173,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 164,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 141,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 159,
+        "threshold": 10
+      }
+    }
+  },
+  "virabhadrasana_one": {
+    "description": "Ground yourself in the strength of the first Warrior. Build powerful legs and a reaching heart as you establish your noble presence.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 127,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 117,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 170,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 171,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 88,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 128,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 96,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 168,
+        "threshold": 10
+      }
+    }
+  },
+  "virabhadrasana_three": {
+    "description": "Find balance in full flight. Warrior III demands absolute focus and total-body integration as you hover parallel to the earth.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 116,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 150,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 149,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 160,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 117,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 125,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 160,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 131,
+        "threshold": 10
+      }
+    }
+  },
+  "virabhadrasana_two": {
+    "description": "Gaze into the distance with unwavering resolve. Warrior II builds heat and stamina, teaching you to stand firm in your own power.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 168,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 121,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 101,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 104,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 108,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 93,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 84,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 61,
+        "threshold": 10
+      }
+    }
+  },
+  "vrkasana": {
+    "description": "Root deeply to rise. Tree pose is the ultimate lesson in find balance through grounding, growing taller against the pull of gravity.",
+    "angles": {
+      "angle_right_elbow": {
+        "ideal": 135,
+        "threshold": 10
+      },
+      "angle_left_elbow": {
+        "ideal": 137,
+        "threshold": 10
+      },
+      "angle_right_shoulder": {
+        "ideal": 166,
+        "threshold": 10
+      },
+      "angle_left_shoulder": {
+        "ideal": 152,
+        "threshold": 10
+      },
+      "angle_right_hip": {
+        "ideal": 113,
+        "threshold": 10
+      },
+      "angle_left_hip": {
+        "ideal": 171,
+        "threshold": 10
+      },
+      "angle_right_knee": {
+        "ideal": 21,
+        "threshold": 10
+      },
+      "angle_left_knee": {
+        "ideal": 135,
+        "threshold": 10
+      }
+    }
+  }
+}

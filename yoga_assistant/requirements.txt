@@ -1,0 +1,28 @@
+# ---- Core Machine Learning & Data ----
+tensorflow
+keras
+scikit-learn
+python-multipart
+pandas
+numpy
+joblib
+protobuf
+uvicorn
+fastapi
+# ---- Local Database & Auth ----
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+# ---- Computer Vision ----
+opencv-python-headless
+mediapipe
+transformers
+tf-keras
+python-dotenv
+torch
+tokenizers
+# ---- Web App & Streaming ----
+crewai
+drill
+pydantic
+langchain_google_genai
