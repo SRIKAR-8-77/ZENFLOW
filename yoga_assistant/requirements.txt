@@ -24,4 +24,5 @@ python-multipart
 # ---- AI Agent (Coach) ----
 crewai
 langchain_google_genai
+google-generativeai
 pydantic
