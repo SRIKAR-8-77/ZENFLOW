@@ -25,9 +25,7 @@ export function Navigation({ currentView, onViewChange, user, onLogout }) {
                             className="flex items-center gap-3 px-4"
                             whileHover={{ scale: 1.05 }}
                         >
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                                <Sparkles className="w-6 h-6 text-white" />
-                            </div>
+                            <img src="/logo.png" alt="ZenFlow Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-purple-500/20" />
                             <span className="text-xl tracking-wider text-white">ZenFlow</span>
                         </motion.div>
 
