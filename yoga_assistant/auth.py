@@ -16,7 +16,8 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 # --- Password Hashing ---
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Using pbkdf2_sha256 for better compatibility across environments
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 class Token(BaseModel):
     access_token: str

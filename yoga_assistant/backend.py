@@ -12,6 +12,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from fastapi import FastAPI, File, UploadFile, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 import json
@@ -68,20 +69,34 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Serve static images
+if os.path.exists('reference_images'):
+    app.mount("/images", StaticFiles(directory="reference_images"), name="images")
+
 # --- Global Model & Artifact Loading ---
-print("Loading models and artifacts...")
+print("--- STARTING MODEL LOADING ---")
 try:
+    print("Loading Keras model...")
     model = load_model(os.path.join('YOGA_NOTEBOOK', 'best_yoga_model.keras'))
+    print("Loading Label Encoder...")
     le = joblib.load(os.path.join('YOGA_NOTEBOOK', 'label_encoder.pkl'))
+    print("Loading Scaler...")
     scaler = joblib.load(os.path.join('YOGA_NOTEBOOK', 'scaler.pkl'))
+    print("Loading Imputer...")
     imputer = joblib.load(os.path.join('YOGA_NOTEBOOK', 'col_means.pkl'))
     
+    # --- Patch for scikit-learn version compatibility ---
+    # Newer versions of scikit-learn expect _fill_dtype on SimpleImputer
+    if not hasattr(imputer, '_fill_dtype'):
+        imputer._fill_dtype = np.float64
+    
+    print("Setting up MediaPipe landmarker...")
     model_path = os.path.join('YOGA_NOTEBOOK', 'pose_landmarker_heavy.task')
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"MediaPipe task file '{model_path}' not found.")
@@ -103,6 +118,8 @@ try:
 except Exception as e:
     print(f"CRITICAL ERROR: Failed to load models/artifacts: {e}")
     model, le, scaler, imputer, landmarker = None, None, None, None, None
+
+import collections
 
 # --- Helper Functions ---
 def calculate_angle(a, b, c):
@@ -289,6 +306,125 @@ async def upload_image(
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/analyze-session/")
+async def analyze_session(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Analyzes a video clip, detects all poses, and calculates held duration for each."""
+    try:
+        if model is None or landmarker is None:
+            raise HTTPException(status_code=500, detail="Server models not initialized.")
+
+        # Save uploaded video to temp
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp:
+            contents = await file.read()
+            tmp.write(contents)
+            video_path = tmp.name
+
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            os.unlink(video_path)
+            raise HTTPException(status_code=400, detail="Invalid video file.")
+
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        duration_sec = total_frames / fps if fps > 0 else 0
+        
+        # Sample FOUR frames per second for ultra-precision
+        sample_interval = max(int(fps / 4), 1)
+        
+        # Track statistics for ALL poses detected
+        pose_data = collections.defaultdict(lambda: {"count": 0, "accuracies": [], "feedbacks": []})
+        
+        print(f"--- Starting Analysis (Ultra-Res 4fps) for {total_frames} frames ({duration_sec:.1f}s) ---")
+        frame_idx = 0
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
+            
+            if frame_idx % sample_interval == 0:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as img_tmp:
+                    cv2.imwrite(img_tmp.name, frame)
+                    img_path = img_tmp.name
+                
+                features_dict = extract_features_from_image_robust(img_path, landmarker)
+                os.unlink(img_path)
+                
+                if features_dict:
+                    features_list = list(features_dict.values())
+                    features_array = np.array([features_list])
+                    features_imputed = imputer.transform(features_array)
+                    features_scaled = scaler.transform(features_imputed)
+                    prediction = model.predict(features_scaled)
+                    
+                    idx = np.argmax(prediction)
+                    conf = float(np.max(prediction))
+                    pose_name = le.inverse_transform([idx])[0]
+                    
+                    if conf > 0.45: # Lowered threshold to be more inclusive
+                        pose_data[pose_name]["count"] += 1
+                        pose_acc_data = calculate_pose_accuracy(features_dict, pose_name)
+                        pose_data[pose_name]["accuracies"].append(pose_acc_data.get("accuracy", 0))
+                        pose_data[pose_name]["feedbacks"].append(pose_acc_data.get("feedback", ""))
+                
+            frame_idx += 1
+        
+        cap.release()
+        os.unlink(video_path)
+        
+        if not pose_data:
+            raise HTTPException(status_code=400, detail="No recognizable yoga poses detected in the clip.")
+        
+        results = []
+        for pose_name, data in pose_data.items():
+            duration = round(data["count"] * 0.25, 2) # Multiplied by 0.25 because we sample 4 frames/sec
+            if duration < 10.0: # Minimum threshold of 10 seconds to filter out noise
+                print(f"Skipping {pose_name}: Duration {duration}s < 10s threshold")
+                continue
+                
+            avg_accuracy = sum(data["accuracies"]) / len(data["accuracies"])
+            best_feedback = data["feedbacks"][-1] if data["feedbacks"] else "Presence detected."
+            
+            print(f"Aggregating: {pose_name} | Duration: {duration}s | Acc: {avg_accuracy:.1f}%")
+            
+            # Save to DB
+            duration_int = int(round(duration))
+            new_session = YogaSession(
+                user_id=current_user.id,
+                pose_name=pose_name,
+                confidence_score=0.0,
+                accuracy_score=round(avg_accuracy),
+                feedback_text=f"Held for {duration_int} seconds. {best_feedback}",
+                duration=duration_int,
+                date=datetime.datetime.utcnow()
+            )
+            db.add(new_session)
+            results.append({
+                "pose": pose_name,
+                "accuracy": round(avg_accuracy),
+                "duration": duration_int,
+                "feedback": f"You held {pose_name} for {duration_int} seconds.",
+                "details": f"Form accuracy: {round(avg_accuracy)}%. {best_feedback}",
+                "sessionId": None
+            })
+
+        db.commit()
+        
+        return {
+            "total_duration": round(duration_sec),
+            "poses_detected": len(results),
+            "results": results
+        }
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f"Video Analysis Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/submit-feedback/")
 async def submit_feedback(
@@ -359,17 +495,20 @@ async def ask_gemini(data: QueryModel, current_user: User = Depends(get_current_
         # Pass user_id (int) to the crew function
         result = crew(user_query, current_user.id)
 
+        # result is a CrewOutput object, convert to string for DB
+        bot_response_text = str(result)
+
         # Save to ChatHistory
         new_chat = ChatHistory(
             user_id=current_user.id,
             user_query=user_query,
-            bot_response=result,
+            bot_response=bot_response_text,
             created_date=datetime.datetime.utcnow()
         )
         db.add(new_chat)
         db.commit()
 
-        return {"response": result}
+        return {"response": bot_response_text}
 
     except Exception as e:
         print(f"Error in ask-gemini endpoint: {e}")
@@ -432,14 +571,28 @@ async def get_exercises():
         with open('pose_templates.json', 'r') as f:
             templates = json.load(f)
         
+        # Helper to find matching image
+        images = os.listdir('reference_images') if os.path.exists('reference_images') else []
+        
         exercises = []
         for key, data in templates.items():
             if key == "alanasana":
                 continue
+            
+            # Match key to image filename
+            # e.g. adho_mukha_svanasana -> Adho Mukha Svanasana.jpeg/jpg
+            display_name = key.replace("_", " ").title()
+            thumbnail = ""
+            for img in images:
+                if img.lower().startswith(display_name.lower()):
+                    thumbnail = f"images/{img}"
+                    break
+            
             exercises.append({
                 "id": key,
-                "name": key.replace("_", " ").title(),
+                "name": display_name,
                 "description": data.get("description", ""),
+                "thumbnail": thumbnail,
                 "category": "Balance" if "vrksasana" in key or "chandrasana" in key else "Strength" if "virabhadrasana" in key or "phalakasana" in key else "Flexibility",
                 "angles": data.get("angles", {})
             })

@@ -30,3 +30,7 @@ yoga_assistant/YOGA_NOTEBOOK/*.h5
 # OS files
 .DS_Store
 Thumbs.db
+
+# Deployment Guides (Private)
+AWS_STEP_BY_STEP.md
+DEPLOYMENT.md

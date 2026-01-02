@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 # --- Local Modules ---
 import database
-from database import User, YogaSession, JournalEntry, ChatHistory
+from database import User, YogaSession, JournalEntry, ChatHistory, CalendarPlan
 
 # Load environment variables
 load_dotenv()
@@ -48,6 +48,7 @@ class SQLYogaTool(BaseTool):
                     "accuracy": s.accuracy_score,
                     "feedback": s.feedback_text,
                     "notes": s.feedback_notes,
+                    "duration": s.duration,
                     "date": s.date.isoformat()
                 } for s in sessions
             ]

@@ -5,8 +5,7 @@ import datetime
 import os
 
 # --- Database Setup ---
-# We use a /data/ subfolder for easy volume mounting and persistence
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/yoga_app.db")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./yoga_app.db")
 
 # For SQLite, we might need connect_args={"check_same_thread": False}
 if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
@@ -38,6 +37,7 @@ class YogaSession(Base):
     feedback_text = Column(Text)
     feedback_notes = Column(Text)  # For manual user feedback
     feedback_analysis = Column(Text) # For AI analysis of feedback
+    duration = Column(Integer, default=0) # Duration in seconds
     date = Column(DateTime, default=datetime.datetime.utcnow)
 
 class JournalEntry(Base):

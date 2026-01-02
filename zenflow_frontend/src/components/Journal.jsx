@@ -1,144 +1,149 @@
-import React, { useState } from 'react';
-import { JournalIcon, JournalHistoryIcon } from './Icons';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, Sparkles, Send, Heart, Calendar, ArrowRight } from 'lucide-react';
 
-function SentimentIndicator({ label, score }) {
-    const sentiment = label?.toUpperCase();
-    const isPositive = sentiment === 'POSITIVE';
-    const isNegative = sentiment === 'NEGATIVE';
-
-    const colorClass = isPositive ? 'text-accent-400 bg-accent-400/10 border-accent-400/20' : isNegative ? 'text-rose-400 bg-rose-400/10 border-rose-400/20' : 'text-slate-400 bg-slate-400/10 border-slate-400/20';
-    const emoji = isPositive ? '✨' : isNegative ? '🌊' : '🍃';
-
-    if (!sentiment || typeof score !== 'number') return null;
-
-    return (
-        <div className={`mt-4 inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black border tracking-wider animate-in fade-in duration-500 ${colorClass}`}>
-            <span className="mr-2 text-xs">{emoji}</span>
-            {sentiment} • {(score * 100).toFixed(0)}% resonance
-        </div>
-    );
-}
-
-export function Journal({ user, backendUrl, onEntrySaved }) {
+export function Journal({ user, backendUrl }) {
     const [entry, setEntry] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [message, setMessage] = useState(null);
+    const [history, setHistory] = useState([]);
+    const [isSaving, setIsSaving] = useState(false);
+    const [selectedMood, setSelectedMood] = useState('Focused');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!entry.trim()) return;
+    const moods = [
+        { name: 'Energized', icon: '⚡' },
+        { name: 'Calm', icon: '🌊' },
+        { name: 'Focused', icon: '🎯' },
+        { name: 'Peaceful', icon: '☁️' }
+    ];
 
-        setIsSubmitting(true);
-        setMessage(null);
-
-        try {
+    useEffect(() => {
+        const fetchHistory = async () => {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
+            try {
+                const response = await fetch(`${backendUrl}/get-journal-entries/`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (response.ok) setHistory(await response.json());
+            } catch (e) { console.error(e); }
+        };
+        fetchHistory();
+    }, [backendUrl]);
+
+    const handleSave = async () => {
+        if (!entry.trim()) return;
+        setIsSaving(true);
+        const token = localStorage.getItem('zenflow_token');
+        try {
             const response = await fetch(`${backendUrl}/add-journal-entry/`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ entry: entry }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ entry: `[Mood: ${selectedMood}] ${entry}` })
             });
-
             if (response.ok) {
-                setMessage({ type: 'success', text: 'Reflection anchored in your digital sanctuary.' });
                 setEntry('');
-                onEntrySaved();
-            } else {
-                setMessage({ type: 'error', text: 'The flow is blocked. Seek the connection again.' });
+                const fresh = await fetch(`${backendUrl}/get-journal-entries/`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (fresh.ok) setHistory(await fresh.json());
             }
-        } catch (err) {
-            setMessage({ type: 'error', text: 'The sanctuary is disconnected. Check your connection.' });
+        } catch (e) {
+            console.error(e);
         } finally {
-            setIsSubmitting(false);
-            setTimeout(() => setMessage(null), 5000);
+            setIsSaving(false);
         }
     };
 
     return (
-        <div className="zen-card relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-24 h-24 bg-accent-500/5 blur-[40px] rounded-full pointer-events-none"></div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="pt-32 pb-20 px-6 min-h-screen font-sans"
+        >
+            <div className="max-w-6xl mx-auto">
+                <header className="text-center mb-12">
+                    <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-rose-400 to-orange-400">
+                        Reflections
+                    </h1>
+                    <p className="text-xl text-white/60 italic">Writing as a meditative act.</p>
+                </header>
 
-            <h2 className="text-xl font-bold mb-8 text-white flex items-center tracking-tight">
-                <span className="w-8 h-8 rounded-xl bg-accent-500/20 flex items-center justify-center mr-3 text-accent-400">
-                    <JournalIcon />
-                </span>
-                Daily Reflection
-            </h2>
-
-            <div className="mb-8 flex justify-center">
-                <div className="w-40 h-40 bg-white/5 rounded-full flex items-center justify-center p-6 relative group-hover:scale-105 transition-transform duration-700">
-                    <div className="absolute inset-0 bg-accent-500/5 animate-pulse-glow rounded-full"></div>
-                    <img src="/assets/journal.png" alt="Journaling" className="w-full h-full object-contain mix-blend-screen opacity-90 drop-shadow-[0_0_15px_rgba(45,212,191,0.3)]" />
-                </div>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <textarea
-                    value={entry}
-                    onChange={(e) => setEntry(e.target.value)}
-                    placeholder="Capture your inner flow..."
-                    className="zen-input w-full min-h-[160px] resize-none leading-relaxed text-slate-200 placeholder:text-slate-600"
-                ></textarea>
-
-                <button
-                    type="submit"
-                    disabled={isSubmitting || !entry.trim()}
-                    className="zen-button-primary w-full !bg-gradient-to-r from-accent-600 to-teal-500 shadow-accent-500/20 disabled:grayscale disabled:opacity-30 disabled:shadow-none"
-                >
-                    {isSubmitting ? 'Anchoring...' : 'Anchor Reflection'}
-                </button>
-
-                {message && (
-                    <div className={`p-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.1em] border animate-in fade-in zoom-in-95 duration-500
-                        ${message.type === 'success' ? 'bg-accent-500/10 text-accent-400 border-accent-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
-                        {message.text}
-                    </div>
-                )}
-            </form>
-        </div>
-    );
-}
-
-export function JournalHistory({ entries }) {
-    return (
-        <div className="zen-card glass-dark relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-primary-500/5 blur-[80px] rounded-full pointer-events-none"></div>
-
-            <h2 className="text-xl font-bold mb-8 text-white flex items-center tracking-tight">
-                <span className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center mr-3 text-slate-400 shadow-inner">
-                    <JournalHistoryIcon />
-                </span>
-                Reflection Path
-            </h2>
-
-            <div className="space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar relative z-10">
-                {entries.length > 0 ? (
-                    entries.map((entry, idx) => (
-                        <div key={entry.id} className="group relative pl-8 pb-8 border-l border-white/10 last:pb-0 animate-in fade-in slide-in-from-left-4 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
-                            <div className="absolute left-[-5px] top-0 w-2.5 h-2.5 rounded-full bg-slate-900 border border-accent-400 shadow-[0_0_10px_rgba(45,212,191,0.5)] group-hover:scale-150 transition-transform"></div>
-                            <div className="bg-white/5 rounded-3xl p-6 border border-white/5 group-hover:bg-white/[0.08] group-hover:border-white/10 transition-all shadow-xl">
-                                <div className="flex justify-between items-start mb-4">
-                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.15em]">
-                                        {new Date(entry.date).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
-                                    </p>
-                                    <div className="w-1.5 h-1.5 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    {/* Entry Workspace */}
+                    <div className="lg:col-span-12 relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-orange-500/5 rounded-[3rem] blur-3xl pointer-events-none" />
+                        <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-10 overflow-hidden shadow-2xl">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
+                                <div className="flex gap-4">
+                                    {moods.map((m) => (
+                                        <button
+                                            key={m.name}
+                                            onClick={() => setSelectedMood(m.name)}
+                                            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all ${selectedMood === m.name ? 'bg-pink-500 text-white shadow-lg shadow-pink-500/30' : 'bg-white/5 text-white/40 hover:bg-white/10'
+                                                }`}
+                                        >
+                                            <span className="text-2xl mb-1">{m.icon}</span>
+                                            <span className="text-[8px] font-bold uppercase tracking-tighter">{m.name}</span>
+                                        </button>
+                                    ))}
                                 </div>
-                                <p className="text-slate-300 leading-relaxed italic text-sm">"{entry.entry_text}"</p>
-                                <SentimentIndicator label={entry.sentiment} score={entry.sentiment_score} />
+                                <p className="text-white/40 text-sm italic font-medium">How is your energy flowing today?</p>
+                            </div>
+
+                            <textarea
+                                value={entry}
+                                onChange={(e) => setEntry(e.target.value)}
+                                placeholder="Pour your thoughts onto the digital canvas..."
+                                className="w-full h-64 bg-transparent border-none focus:ring-0 text-2xl text-white placeholder-white/20 resize-none font-medium leading-relaxed"
+                            />
+
+                            <div className="mt-8 flex justify-end">
+                                <button
+                                    onClick={handleSave}
+                                    disabled={isSaving || !entry.trim()}
+                                    className="group flex items-center gap-3 bg-gradient-to-r from-pink-500 to-orange-500 px-10 py-5 rounded-3xl font-bold text-white shadow-xl shadow-pink-500/20 hover:shadow-orange-500/40 transition-all disabled:opacity-30"
+                                >
+                                    {isSaving ? 'Preserving Presence...' : 'Save Reflection'}
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </button>
                             </div>
                         </div>
-                    ))
-                ) : (
-                    <div className="p-12 text-center">
-                        <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/5 opacity-30">
-                            <JournalIcon />
-                        </div>
-                        <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mb-2">The path is clear</p>
-                        <p className="text-[10px] text-slate-600 italic">"Write for yourself, no one else is watching."</p>
                     </div>
-                )}
+
+                    {/* Past Reflections */}
+                    <div className="lg:col-span-12">
+                        <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3 px-4">
+                            <Calendar className="w-6 h-6 text-pink-400" />
+                            Chronicle
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <AnimatePresence>
+                                {history.map((h) => (
+                                    <motion.div
+                                        key={h.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="bg-white/5 backdrop-blur-xl border border-white/5 rounded-3xl p-6 hover:border-pink-500/30 transition-all cursor-pointer group"
+                                    >
+                                        <div className="text-xs font-bold text-white/30 uppercase tracking-widest mb-4">
+                                            {new Date(h.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                        </div>
+                                        <p className="text-white/80 line-clamp-4 leading-relaxed font-medium mb-4 group-hover:text-white transition-colors">
+                                            {h.entry_text}
+                                        </p>
+                                        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                                            <Heart className="w-4 h-4 text-pink-500/20 group-hover:text-pink-500 transition-colors" />
+                                            <span className="text-[10px] text-white/40 uppercase font-black">Memory Logged</span>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
