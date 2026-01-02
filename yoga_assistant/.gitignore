@@ -34,12 +34,13 @@ env/
 #! *.pb
 #! *.task
 
-# Media files and Data
+# Media files (Allowed for Asana Vault)
+#! *.mp4
+#! *.jpg
+#! *.jpeg
+#! *.png
+#! *.gif
 *.mp4
-*.jpg
-*.jpeg
-*.png
-*.gif
 *.csv
 
 # Logs
