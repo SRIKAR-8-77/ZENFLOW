@@ -11,13 +11,12 @@ dist/
 build/
 
 # Data and Models
+#! yoga_assistant/YOGA_NOTEBOOK/*.pkl
+#! yoga_assistant/YOGA_NOTEBOOK/*.keras
+#! yoga_assistant/YOGA_NOTEBOOK/*.h5
+*.csv
 *.db
 *.sqlite3
-*.csv
-yoga_assistant/YOGA_NOTEBOOK/*.csv
-yoga_assistant/YOGA_NOTEBOOK/*.pkl
-yoga_assistant/YOGA_NOTEBOOK/*.keras
-yoga_assistant/YOGA_NOTEBOOK/*.h5
 
 # Environment
 .env

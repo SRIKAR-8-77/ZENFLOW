@@ -27,18 +27,20 @@ env/
 .env
 .env.local
 
-# Model files and data
-*.h5
-*.keras
-*.pkl
-*.pb
+# Model files and data (Allowed for Hackathon Deployment)
+#! *.h5
+#! *.keras
+#! *.pkl
+#! *.pb
+#! *.task
 
-# Media files
+# Media files and Data
 *.mp4
 *.jpg
 *.jpeg
 *.png
 *.gif
+*.csv
 
 # Logs
 *.log

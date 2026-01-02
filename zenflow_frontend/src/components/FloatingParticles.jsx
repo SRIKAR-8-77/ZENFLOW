@@ -21,8 +21,9 @@ export function FloatingParticles() {
             {particles.map((particle) => (
                 <motion.div
                     key={particle.id}
-                    className="absolute rounded-full bg-purple-400/20 blur-sm"
+                    className="absolute rounded-full blur-sm"
                     style={{
+                        backgroundColor: 'rgba(192, 132, 252, 0.2)', // Equivalent to bg-purple-400/20
                         left: `${particle.x}%`,
                         top: `${particle.y}%`,
                         width: particle.size,
