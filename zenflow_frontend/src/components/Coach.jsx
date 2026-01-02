@@ -9,34 +9,13 @@ export function Coach({ user, backendUrl }) {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        const fetchHistory = async () => {
-            const token = localStorage.getItem('zenflow_token');
-            if (!token) return;
-            try {
-                const response = await fetch(`${backendUrl}/get-coach-history/`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                if (response.ok) {
-                    const history = await response.json();
-                    const formattedHistory = history.flatMap(chat => [
-                        { id: `u-${chat.id}`, role: 'user', content: chat.user_query, timestamp: new Date(chat.created_date) },
-                        { id: `a-${chat.id}`, role: 'assistant', content: chat.bot_response, timestamp: new Date(chat.created_date) }
-                    ]);
-
-                    if (formattedHistory.length > 0) {
-                        setMessages(formattedHistory);
-                    } else {
-                        setMessages([
-                            { id: 0, role: 'assistant', content: "Namaste. I am your ZenFlow AI Mentor. How can I guide your practice today?", timestamp: new Date() }
-                        ]);
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching chat history:", error);
-            }
-        };
-        fetchHistory();
-    }, [backendUrl]);
+        // We no longer auto-fetch history to ensure a clean "Session Reset" on every visit.
+        // This keeps the interaction focused and fresh.
+        // Historical messages remain preserved in the backend SQL database.
+        setMessages([
+            { id: 0, role: 'assistant', content: "Namaste. I am your ZenFlow AI Mentor. How can I guide your practice today?", timestamp: new Date() }
+        ]);
+    }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
