@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Local development settings
+.env
+.env.local
+
+# Model files and data (Allowed for Hackathon Deployment)
+#! *.h5
+#! *.keras
+#! *.pkl
+#! *.pb
+#! *.task
+
+# Media files (Allowed for Asana Vault)
+#! *.mp4
+#! *.jpg
+#! *.jpeg
+#! *.png
+#! *.gif
+*.mp4
+*.csv
+
+# Logs
+*.log
+
+# Service account keys and sensitive data
+serviceAccountKey.json
+
+# OS specific
+.DS_Store
+Thumbs.db
