@@ -7,14 +7,14 @@ const containerVariants = {
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1,
+            staggerChildren: 0.15,
             delayChildren: 0.1,
         },
     },
 };
 
 const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
         y: 0,
         opacity: 1,
@@ -66,9 +66,8 @@ export function Dashboard({ user, backendUrl }) {
 
     return (
         <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, y: -20 }}
             className="pt-28 pb-20 px-4 md:px-8 font-sans min-h-screen bg-[#080313] text-white relative overflow-hidden"
         >
@@ -78,15 +77,19 @@ export function Dashboard({ user, backendUrl }) {
             <div className="max-w-7xl mx-auto relative z-10">
                 
                 {/* --- NEW SPLIT HERO SECTION --- */}
-                <motion.div variants={itemVariants} className="mb-20 mt-8 relative">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants} 
+                    className="mb-20 mt-8 relative"
+                >
                     <div className="flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
                         
                         {/* LEFT SIDE: 3D Glowing Yoga Pose */}
                         <motion.div 
+                            variants={itemVariants}
                             className="relative w-full md:w-1/2 flex justify-center items-center"
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
                         >
                             {/* Animated Glowing Aura Behind Image */}
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -130,10 +133,8 @@ export function Dashboard({ user, backendUrl }) {
 
                         {/* RIGHT SIDE: Text & CTA (Aura Structure) */}
                         <motion.div 
+                            variants={itemVariants}
                             className="w-full md:w-1/2 flex flex-col items-start text-left"
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                         >
                             <motion.div 
                                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-purple-300 mb-6 backdrop-blur-md"
@@ -170,7 +171,13 @@ export function Dashboard({ user, backendUrl }) {
                 {/* --- END SPLIT HERO SECTION --- */}
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8"
+                >
                     <StatCard
                         icon={<Flame className="w-5 h-5 text-orange-400" />}
                         value={streak}
@@ -199,10 +206,16 @@ export function Dashboard({ user, backendUrl }) {
                         trend="Keep it up"
                         trendUp={true}
                     />
-                </div>
+                </motion.div>
 
                 {/* Recent Activity */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                >
                     <ActivityPanel
                         title="Recent Sessions"
                         icon={<Activity className="w-5 h-5 text-purple-400" />}
@@ -223,7 +236,7 @@ export function Dashboard({ user, backendUrl }) {
                             valueColor: "text-orange-400"
                         }))}
                     />
-                </div>
+                </motion.div>
             </div>
         </motion.div>
     );
@@ -233,8 +246,8 @@ function StatCard({ icon, value, label, trend, trendUp }) {
     return (
         <motion.div
             variants={itemVariants}
-            whileHover={{ y: -2 }}
-            className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:bg-white/[0.04] transition-colors"
+            whileHover={{ y: -5, scale: 1.02 }}
+            className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:bg-white/[0.04] hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:border-purple-500/40 transition-all duration-300"
         >
             <div className="flex justify-between items-start mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/5">
@@ -256,7 +269,10 @@ function StatCard({ icon, value, label, trend, trendUp }) {
 
 function ActivityPanel({ title, icon, items }) {
     return (
-        <motion.div variants={itemVariants} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col h-full">
+        <motion.div 
+            variants={itemVariants} 
+            className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col h-full hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:border-purple-500/20 transition-all duration-300"
+        >
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/5">
                     {icon}
@@ -268,8 +284,8 @@ function ActivityPanel({ title, icon, items }) {
                 {items.length > 0 ? items.map((item, index) => (
                     <motion.div
                         key={index}
-                        whileHover={{ x: 4 }}
-                        className="group flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.03] transition-all cursor-pointer"
+                        whileHover={{ x: 4, scale: 1.01 }}
+                        className="group flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:border-purple-500/40 transition-all duration-300 cursor-pointer"
                     >
                         <div className="flex flex-col gap-1">
                             <span className="text-sm font-medium text-gray-200">{item.title}</span>
