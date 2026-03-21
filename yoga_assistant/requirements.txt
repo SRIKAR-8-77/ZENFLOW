@@ -1,0 +1,27 @@
+# ---- Core Web & API ----
+uvicorn
+fastapi
+gunicorn
+
+# ---- Machine Learning & Computer Vision ----
+tensorflow-cpu
+keras
+scikit-learn
+opencv-python-headless
+mediapipe
+numpy
+joblib
+protobuf
+
+# ---- Database & Auth ----
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+python-dotenv
+python-multipart
+
+# ---- AI Agent (Coach) ----
+crewai
+langchain_google_genai
+google-generativeai
+pydantic
