@@ -174,10 +174,16 @@ export function Journal({ user, backendUrl }) {
                                 </motion.div>
                             ))}
                             {history.length === 0 && (
-                                <div className="col-span-full text-center py-12 border border-dashed border-white/10 rounded-3xl bg-white/[0.01]">
+                            <motion.div 
+                                    key="empty-state"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                   className="col-span-full text-center py-12 border border-dashed border-white/10 rounded-3xl bg-white/[0.01]"
+                                >
                                     <BookOpen className="w-8 h-8 text-gray-600 mx-auto mb-3" />
                                     <p className="text-gray-500 text-sm">Your chronicle is empty. Begin your journey above.</p>
-                                </div>
+                                </motion.div>
                             )}
                         </AnimatePresence>
                     </div>

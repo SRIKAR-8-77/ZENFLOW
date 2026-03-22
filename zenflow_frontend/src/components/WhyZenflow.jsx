@@ -103,7 +103,7 @@ export function WhyZenflow() {
                 <div className="w-full md:w-1/2 h-[450px] flex items-center justify-center relative">
                     
                     {/* The Rotating Words */}
-                    <div className="absolute -right-[100px] md:-right-[150px] top-1/2 w-0 h-0">
+                    <div aria-hidden="true" className="absolute -right-[100px] md:-right-[150px] top-1/2 w-0 h-0">
                         {words.map((word, index) => {
                             const slotIndex = (index + activeIndex) % 5;
                             const { rotate, opacity, scale, filter } = getSlotStyles(slotIndex, word);

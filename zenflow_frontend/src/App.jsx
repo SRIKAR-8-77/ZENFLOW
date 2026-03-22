@@ -66,7 +66,14 @@ export default function App() {
           />
           <main className="relative z-10 overflow-hidden flex-1 flex flex-col">
             <AnimatePresence mode="wait">
-              {currentView === 'dashboard' && <Dashboard key="dashboard" user={user} backendUrl={BACKEND_URL} />}
+              {currentView === 'dashboard' && (
+                <Dashboard
+                  key="dashboard"
+                  user={user}
+                  backendUrl={BACKEND_URL}
+                  onViewChange={setCurrentView}
+                />
+              )}
               {currentView === 'practice' && <Practice key="practice" user={user} backendUrl={BACKEND_URL} />}
               {currentView === 'journal' && <Journal key="journal" user={user} backendUrl={BACKEND_URL} />}
               {currentView === 'coach' && <Coach key="coach" user={user} backendUrl={BACKEND_URL} />}
@@ -88,6 +95,7 @@ function AuthScreen({ onLogin }) {
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Rotate the carousel every 4 seconds
   useEffect(() => {
@@ -99,6 +107,8 @@ function AuthScreen({ onLogin }) {
 
   const handleAuthAction = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setError('');
     try {
       if (isRegistering) {
@@ -123,7 +133,13 @@ function AuthScreen({ onLogin }) {
         const data = await res.json();
         onLogin({ username: email.split('@')[0], email }, data.access_token);
       }
-    } catch (err) { setError(err.message); }
+    // } catch (err) { setError(err.message); }
+   } catch (err) {
+    setError(err.message);
+   } finally
+    {      setIsSubmitting(false);   
+
+    }
   };
 
   // Determine the position of each pose based on the current index
@@ -223,11 +239,14 @@ function AuthScreen({ onLogin }) {
 
                 <motion.button
                     type="submit"
+                    disabled={isSubmitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full mt-4 group relative px-8 py-4 rounded-xl bg-white text-black font-semibold text-sm overflow-hidden flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all duration-300"
+                    className="w-full mt-4 group relative px-8 py-4 rounded-xl bg-white text-black font-semibold text-sm overflow-hidden flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                    <span className="relative z-10">{isRegistering ? "Commence Journey" : "Re-enter Sanctuary"}</span>
+                     <span className="relative z-10">
+                        {isSubmitting ? "Please wait..." : isRegistering ? "Commence Journey" : "Re-enter Sanctuary"}
+                    </span>
                     <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-orange-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.button>

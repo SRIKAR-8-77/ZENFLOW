@@ -27,7 +27,7 @@ const itemVariants = {
     },
 };
 
-export function Dashboard({ user, backendUrl }) {
+export function Dashboard({ user, backendUrl, onViewChange }) {
     const [sessions, setSessions] = useState([]);
     const [streak, setStreak] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -157,6 +157,7 @@ export function Dashboard({ user, backendUrl }) {
 
                             {/* Glowing Button */}
                             <motion.button
+                            onClick={() => onViewChange('practice')}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="group relative px-8 py-4 rounded-full bg-white text-black font-semibold text-sm overflow-hidden flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all duration-300"
@@ -289,7 +290,7 @@ function ActivityPanel({ title, icon, items }) {
                     <motion.div
                         key={index}
                         whileHover={{ x: 4, scale: 1.01 }}
-                        className="group flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:border-purple-500/40 transition-all duration-300 cursor-pointer"
+                        className="group flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:border-purple-500/40 transition-all duration-300"
                     >
                         <div className="flex flex-col gap-1">
                             <span className="text-sm font-medium text-gray-200">{item.title}</span>
@@ -297,7 +298,7 @@ function ActivityPanel({ title, icon, items }) {
                         </div>
                         <div className="flex items-center gap-3">
                             <span className={`text-sm font-medium ${item.valueColor}`}>{item.value}</span>
-                            <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-gray-300 transition-colors" />
+
                         </div>
                     </motion.div>
                 )) : (

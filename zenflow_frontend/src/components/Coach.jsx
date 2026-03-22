@@ -23,7 +23,7 @@ export function Coach({ user, backendUrl }) {
     }, [messages]);
 
     const handleSend = async (message = input) => {
-        if (!message.trim()) return;
+       if (isTyping || !message.trim()) return;
 
         const token = localStorage.getItem('zenflow_token');
         const userMsg = { id: Date.now(), role: 'user', content: message, timestamp: new Date() };
@@ -126,17 +126,27 @@ export function Coach({ user, backendUrl }) {
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#080313] via-[#080313] to-transparent pt-12 pb-6 px-4 md:px-8 pointer-events-none">
                 <div className="max-w-4xl mx-auto relative flex flex-col items-center pointer-events-auto">
                     <div className="relative w-full flex items-center">
+                        <label htmlFor="coach-input" className="sr-only">Ask AI Mentor</label>
                         <input
+                        id="coach-input"
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                             onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                  e.preventDefault();
+                                    handleSend();
+                                }   
+                            }}
+                            disabled={isTyping}
                             placeholder="Ask AI Mentor..."
+                            aria-label="Ask AI Mentor"
                             className="w-full bg-[#1a1325]/80 backdrop-blur-xl border border-white/10 rounded-full pl-6 pr-14 py-4 md:py-5 text-gray-200 placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:bg-[#1a1325] transition-all font-medium shadow-2xl"
                         />
                         <button
                             onClick={() => handleSend()}
                             disabled={!input.trim() || isTyping}
+                            aria-label="Send message"
                             className="absolute right-2 p-3 bg-white text-black rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:bg-gray-200 hover:scale-[1.05] active:scale-[0.95] flex items-center justify-center"
                         >
                             <Send className="w-4 h-4 md:w-5 md:h-5" />
