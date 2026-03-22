@@ -186,9 +186,11 @@ function AuthScreen({ onLogin }) {
             </p>
 
             <form className="w-full flex flex-col gap-4" onSubmit={handleAuthAction}>
+              <label htmlFor="auth-email" className="sr-only">Email address</label>
                 <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                     <input 
+                        id="auth-email"
                         type="email" 
                         placeholder="Email Address" 
                         value={email}
@@ -197,10 +199,13 @@ function AuthScreen({ onLogin }) {
                         required
                     />
                 </div>
-
+                
+                <label htmlFor="auth-password" className="sr-only">Password</label>
                 <div className="relative">
+                  
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                     <input 
+                        id="auth-password"
                         type="password" 
                         placeholder="Password" 
                         value={password}

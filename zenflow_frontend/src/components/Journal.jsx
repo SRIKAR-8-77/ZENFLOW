@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Sparkles, Send, Heart, Calendar, ArrowRight, Zap, Waves, Target, Cloud } from 'lucide-react';
 
 export function Journal({ user, backendUrl }) {
