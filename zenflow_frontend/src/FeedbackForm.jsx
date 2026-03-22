@@ -21,13 +21,13 @@ export default function FeedbackForm({ sessionId, user, onSubmit }) {
         if (!token) return;
 
         try {
-            const response = await fetch(`${BACKEND_URL}/feedback/`, {
+            const response = await fetch(`${BACKEND_URL}/submit-feedback/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ sessionId: sessionId, feedback_text: feedback }),
+                body: JSON.stringify({ sessionId: sessionId, feedback: feedback }),
             });
             if (response.ok) {
                 setMessage('Thank you for your feedback!');

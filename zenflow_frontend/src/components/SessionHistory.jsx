@@ -96,10 +96,10 @@ export function SessionHistory({ sessions, onSelectSession }) {
                                         <p className="text-sm font-bold text-white">
                                             {new Date(session.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                         </p>
-                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tighter mt-1">{session.summary.length} patterns discovered</p>
-                                    </td>
+                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tighter mt-1">{session.pose_name} patterns discovered</p>
+                                    </td>   
                                     <td className="py-5 px-6 whitespace-nowrap text-slate-400 font-medium text-sm">
-                                        {Math.floor(session.total_time / 60)}m {session.total_time % 60}s
+                                        {Math.floor(session.duration / 60)}m {session.duration % 60}s
                                     </td>
                                     <td className="py-5 px-6 whitespace-nowrap">
                                         <span className="inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black bg-primary-500/10 text-primary-400 border border-primary-500/20">

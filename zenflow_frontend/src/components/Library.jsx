@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react'; 
 import { Library as LibraryIcon, Search, Filter, BookOpen, Clock, Activity, ChevronRight } from 'lucide-react';
 
 export function Library({ backendUrl }) {

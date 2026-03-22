@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Flame, Activity, Heart, Calendar, TrendingUp, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Flame, Activity, Heart, Calendar, Sparkles, ChevronRight } from 'lucide-react';
+import { WhyZenflow } from './WhyZenflow'; // Adjust this import path if needed
 
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.2,
+            staggerChildren: 0.15,
+            delayChildren: 0.1,
         },
     },
 };
 
 const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
         y: 0,
         opacity: 1,
@@ -26,7 +27,7 @@ const itemVariants = {
     },
 };
 
-export function Dashboard({ user, backendUrl }) {
+export function Dashboard({ user, backendUrl, onViewChange }) {
     const [sessions, setSessions] = useState([]);
     const [streak, setStreak] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -34,7 +35,10 @@ export function Dashboard({ user, backendUrl }) {
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem('zenflow_token');
-            if (!token) return;
+            if (!token) {
+                setLoading(false);
+                return;
+            }
 
             try {
                 const [sessionsRes, streakRes] = await Promise.all([
@@ -63,146 +67,245 @@ export function Dashboard({ user, backendUrl }) {
 
     return (
         <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit={{ opacity: 0, y: -50 }}
-            className="pt-32 pb-20 px-6 font-sans"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="pt-28 pb-20 px-4 md:px-8 font-sans min-h-screen bg-[#080313] text-white relative overflow-hidden"
         >
-            <div className="max-w-7xl mx-auto">
-                {/* Hero Section */}
-                <motion.div variants={itemVariants} className="text-center mb-16">
-                    <motion.div
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            rotate: [0, 180, 360],
-                        }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 opacity-20 blur-3xl"
-                    />
-                    <motion.h1
-                        className="text-6xl md:text-8xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 font-bold"
-                        style={{ paddingBottom: '0.1em' }}
-                    >
-                        Welcome, {user?.username || 'Seeker'}
-                    </motion.h1>
-                    <p className="text-xl text-white/60">Your presence is your power.</p>
+            {/* Background Ambient Glow */}
+            <div className="absolute top-[-10%] left-[50%] translate-x-[-50%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(99,56,249,0.05)_0%,rgba(0,0,0,0)_60%)] rounded-full pointer-events-none z-0"></div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                
+                {/* --- NEW SPLIT HERO SECTION --- */}
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants} 
+                    className="mb-20 mt-8 relative"
+                >
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
+                        
+                        {/* LEFT SIDE: 3D Glowing Yoga Pose */}
+                        <motion.div 
+                            variants={itemVariants}
+                            className="relative w-full md:w-1/2 flex justify-center items-center"
+                        >
+                            {/* Animated Glowing Aura Behind Image */}
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <motion.div 
+                                    animate={{ 
+                                        scale: [1, 1.2, 1],
+                                        opacity: [0.3, 0.6, 0.3],
+                                    }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-80 h-80 md:w-[450px] md:h-[450px] bg-purple-600/40 rounded-full blur-[80px]"
+                                />
+                                <motion.div 
+                                    animate={{ 
+                                        scale: [1, 1.5, 1],
+                                        opacity: [0.2, 0.5, 0.2],
+                                    }}
+                                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                                    className="absolute w-64 h-64 md:w-80 md:h-80 bg-orange-500/30 rounded-full blur-[60px]"
+                                />
+                            </div>
+
+                            {/* POP-OUT Hover Element - Smooth and Delayed */}
+                            <motion.div
+                                whileHover={{ 
+                                    scale: 1.15, // Scales up towards the user
+                                    y: -15,      // Lifts up slightly
+                                    filter: "drop-shadow(0px 30px 50px rgba(168, 85, 247, 0.8))" // Massive glow shadow to simulate height
+                                }}
+                                // Using a tween with easeOut and a longer duration (0.5s) makes it smooth and less snappy
+                                transition={{ duration: 0.5, ease: "easeOut" }}
+                                className="relative z-10 cursor-pointer"
+                            >
+                                {/* IMPORTANT: Replace src with your actual yoga image path */}
+                                <img 
+                                    src="/yoga-pose.svg" 
+                                    alt="Yoga Pose" 
+                                    className="w-80 h-80 md:w-[500px] md:h-[500px] object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all duration-500"
+                                />
+                            </motion.div>
+                        </motion.div>
+
+                        {/* RIGHT SIDE: Text & CTA (Aura Structure) */}
+                        <motion.div 
+                            variants={itemVariants}
+                            className="w-full md:w-1/2 flex flex-col items-start text-left"
+                        >
+                            <motion.div 
+                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-purple-300 mb-6 backdrop-blur-md"
+                            >
+                                <Sparkles className="w-3.5 h-3.5" />
+                                <span>Your sanctuary awaits</span>
+                            </motion.div>
+                            
+                            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+                                Welcome <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400">
+                                    {user?.username || 'Seeker'}
+                                </span>
+                            </h1>
+                            
+                            <p className="text-gray-400 text-lg md:text-xl max-w-md mb-10 leading-relaxed">
+                                Your presence is your power. Step into your flow and continue your journey to mindfulness.
+                            </p>
+
+                            {/* Glowing Button */}
+                            <motion.button
+                            onClick={() => onViewChange('practice')}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="group relative px-8 py-4 rounded-full bg-white text-black font-semibold text-sm overflow-hidden flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all duration-300"
+                            >
+                                <span className="relative z-10">Start Session</span>
+                                <ChevronRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-orange-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </motion.button>
+                        </motion.div>
+
+                    </div>
                 </motion.div>
+                {/* --- END SPLIT HERO SECTION --- */}
+
+                {/* Why Zenflow Section */}
+                <WhyZenflow />
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8"
+                >
                     <StatCard
-                        icon={<Flame className="w-10 h-10 text-orange-400" />}
+                        icon={<Flame className="w-5 h-5 text-orange-400" />}
                         value={streak}
                         label="Day Streak"
-                        trend="🔥"
-                        color="from-orange-500/20 to-red-500/20"
-                        hoverColor="hover:border-orange-500/30"
+                        trend="+1 today"
+                        trendUp={true}
                     />
                     <StatCard
-                        icon={<Activity className="w-10 h-10 text-purple-400" />}
+                        icon={<Activity className="w-5 h-5 text-purple-400" />}
                         value={`${avgAccuracy}%`}
                         label="Avg Accuracy"
-                        trend={<TrendingUp className="w-6 h-6 text-green-400" />}
-                        color="from-purple-500/20 to-pink-500/20"
-                        hoverColor="hover:border-purple-500/30"
+                        trend="Looking good"
+                        trendUp={true}
                     />
                     <StatCard
-                        icon={<Heart className="w-10 h-10 text-pink-400" />}
+                        icon={<Heart className="w-5 h-5 text-pink-400" />}
                         value="Energized"
                         label="Current State"
-                        trend="⚡"
-                        color="from-pink-500/20 to-rose-500/20"
-                        hoverColor="hover:border-pink-500/30"
+                        trend="Optimal"
+                        trendUp={true}
                     />
                     <StatCard
-                        icon={<Calendar className="w-10 h-10 text-blue-400" />}
+                        icon={<Calendar className="w-5 h-5 text-blue-400" />}
                         value={sessions.length}
                         label="Total Sessions"
-                        trend={<Sparkles className="w-6 h-6 text-yellow-400" />}
-                        color="from-blue-500/20 to-cyan-500/20"
-                        hoverColor="hover:border-blue-500/30"
+                        trend="Keep it up"
+                        trendUp={true}
                     />
-                </div>
+                </motion.div>
 
                 {/* Recent Activity */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.1 }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                >
                     <ActivityPanel
                         title="Recent Sessions"
-                        icon={<Activity className="w-6 h-6 text-purple-400" />}
+                        icon={<Activity className="w-5 h-5 text-purple-400" />}
                         items={sessions.slice(0, 3).map(s => ({
                             title: s.pose_name,
-                            value: `${Math.round(s.accuracy_score)}%`,
+                            value: `${Math.round(s.accuracy_score ?? 0)}%`,
                             subtitle: `Duration: ${s.duration || 0} min • ${new Date(s.date).toLocaleDateString()}`,
-                            color: "text-purple-400"
+                            valueColor: "text-purple-400"
                         }))}
-                        gradient="from-purple-500/10 to-pink-500/10"
                     />
                     <ActivityPanel
                         title="Insight Stream"
-                        icon={<Sparkles className="w-6 h-6 text-cyan-400" />}
+                        icon={<Sparkles className="w-5 h-5 text-orange-400" />}
                         items={sessions.slice(0, 3).filter(s => s.feedback_text).map(s => ({
                             title: "Coach Feedback",
-                            value: "✨",
+                            value: "View",
                             subtitle: s.feedback_text,
-                            color: "text-cyan-400"
+                            valueColor: "text-orange-400"
                         }))}
-                        gradient="from-cyan-500/10 to-blue-500/10"
                     />
-                </div>
+                </motion.div>
             </div>
         </motion.div>
     );
 }
 
-function StatCard({ icon, value, label, trend, color, hoverColor }) {
+function StatCard({ icon, value, label, trend, trendUp }) {
     return (
         <motion.div
             variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            className="relative group"
+            whileHover={{ y: -5, scale: 1.02 }}
+            className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:bg-white/[0.04] hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:border-purple-500/40 transition-all duration-300"
         >
-            <div className={`absolute inset-0 bg-gradient-to-br ${color} rounded-3xl blur-xl group-hover:blur-2xl transition-all`} />
-            <div className={`relative h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 ${hoverColor} transition-colors`}>
-                <div className="flex items-center justify-between mb-4">
+            <div className="flex justify-between items-start mb-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/5">
                     {icon}
-                    <div className="text-2xl">{trend}</div>
                 </div>
-                <div className="text-5xl font-bold mb-2 text-white">{value}</div>
-                <div className="text-white/60 font-medium uppercase tracking-wider text-xs">{label}</div>
+                {trend && (
+                    <span className={`text-[10px] font-medium px-2 py-1 rounded-full ${trendUp ? 'bg-purple-500/10 text-purple-400' : 'bg-gray-500/10 text-gray-400'}`}>
+                        {trend}
+                    </span>
+                )}
+            </div>
+            <div>
+                <div className="text-3xl font-semibold text-white mb-1">{value}</div>
+                <div className="text-sm text-gray-400">{label}</div>
             </div>
         </motion.div>
     );
 }
 
-function ActivityPanel({ title, icon, items, gradient }) {
+function ActivityPanel({ title, icon, items }) {
     return (
-        <motion.div variants={itemVariants} className="relative group">
-            <div className={`absolute inset-0 bg-gradient-to-br ${gradient} rounded-3xl blur-xl`} />
-            <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
+        <motion.div 
+            variants={itemVariants} 
+            className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col h-full hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:border-purple-500/20 transition-all duration-300"
+        >
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/5">
                     {icon}
-                    {title}
-                </h2>
-                <div className="space-y-4">
-                    {items.length > 0 ? items.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            whileHover={{ x: 10 }}
-                            className="bg-white/5 rounded-2xl p-5 border border-white/5 hover:border-white/20 transition-all"
-                        >
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="text-lg font-semibold text-white">{item.title}</span>
-                                <span className={item.color}>{item.value}</span>
-                            </div>
-                            <div className="text-sm text-white/60 line-clamp-2 italic">
-                                {item.subtitle}
-                            </div>
-                        </motion.div>
-                    )) : (
-                        <p className="text-white/40 italic py-8 text-center">No presence data yet. Begin your journey.</p>
-                    )}
                 </div>
+                <h2 className="text-lg font-medium text-white">{title}</h2>
+            </div>
+            
+            <div className="flex-1 flex flex-col gap-3">
+                {items.length > 0 ? items.map((item, index) => (
+                    <motion.div
+                        key={index}
+                        whileHover={{ x: 4, scale: 1.01 }}
+                        className="group flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:border-purple-500/40 transition-all duration-300"
+                    >
+                        <div className="flex flex-col gap-1">
+                            <span className="text-sm font-medium text-gray-200">{item.title}</span>
+                            <span className="text-xs text-gray-500 line-clamp-1">{item.subtitle}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <span className={`text-sm font-medium ${item.valueColor}`}>{item.value}</span>
+
+                        </div>
+                    </motion.div>
+                )) : (
+                    <div className="flex-1 flex items-center justify-center py-8">
+                        <p className="text-sm text-gray-500 italic">No presence data yet. Begin your journey.</p>
+                    </div>
+                )}
             </div>
         </motion.div>
     );
