@@ -226,7 +226,7 @@ export function Dashboard({ user, backendUrl, onViewChange }) {
                         icon={<Activity className="w-5 h-5 text-purple-400" />}
                         items={sessions.slice(0, 3).map(s => ({
                             title: s.pose_name,
-                            value: `${Math.round(s.accuracy_score)}%`,
+                            value: `${Math.round(s.accuracy_score ?? 0)}%`,
                             subtitle: `Duration: ${s.duration || 0} min • ${new Date(s.date).toLocaleDateString()}`,
                             valueColor: "text-purple-400"
                         }))}

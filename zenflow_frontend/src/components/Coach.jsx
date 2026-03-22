@@ -58,7 +58,7 @@ export function Coach({ user, backendUrl }) {
     };
 
     return (
-        <div className="relative w-full h-[100dvh] flex flex-col pt-20 md:pt-24 font-sans bg-[#080313] overflow-hidden">
+        <div className="relative w-full flex-1 min-h-0 flex flex-col pt-20 md:pt-24 font-sans bg-[`#080313`] overflow-hidden">
             
             {/* Simple Header */}
             <div className="w-full max-w-4xl mx-auto px-4 md:px-8 shrink-0 mb-2 md:mb-6 flex items-center gap-3">
@@ -71,8 +71,13 @@ export function Coach({ user, backendUrl }) {
             </div>
 
             {/* Scrollable Messages Area */}
-            <div className="flex-1 overflow-y-auto scroll-smooth px-4 md:px-8 pb-40">
-                <div className="max-w-4xl mx-auto space-y-8 md:space-y-10">
+            <div className="flex-1 min-h-0 overflow-y-auto scroll-smooth px-4 md:px-8 pb-40">
+                <div
+                    className="max-w-4xl mx-auto space-y-8 md:space-y-10"
+                    role="log"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                >
                     <AnimatePresence initial={false}>
                         {messages.map((m) => (
                             <motion.div

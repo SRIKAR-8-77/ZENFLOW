@@ -75,6 +75,7 @@ export function Navigation({ currentView, onViewChange, user, onLogout }) {
                             {/* Logout Button */}
                             <button
                                 onClick={onLogout}
+                                aria-label="Log out"
                                 className="p-2 rounded-full border border-white/5 bg-white/[0.02] text-gray-400 hover:text-red-400 hover:bg-red-400/10 hover:border-red-400/20 transition-all"
                                 title="Leave Sanctuary"
                             >
