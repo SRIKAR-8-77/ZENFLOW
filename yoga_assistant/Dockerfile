@@ -26,7 +26,7 @@ RUN uv pip install --system --no-cache -r requirements.txt
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 8001
+EXPOSE 8000
 
 # Run the application
-CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "backend:app", "--bind", "0.0.0.0:8001", "--timeout", "120"]
+CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "backend:app", "--bind", "0.0.0.0:8000", "--timeout", "120"]

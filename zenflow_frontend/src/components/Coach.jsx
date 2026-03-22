@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, Sparkles, User, Bot, TrendingUp, Calendar as CalendarIcon } from 'lucide-react';
+import { Send, Bot } from 'lucide-react';
 
 export function Coach({ user, backendUrl }) {
     const [messages, setMessages] = useState([]);
@@ -9,9 +9,6 @@ export function Coach({ user, backendUrl }) {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        // We no longer auto-fetch history to ensure a clean "Session Reset" on every visit.
-        // This keeps the interaction focused and fresh.
-        // Historical messages remain preserved in the backend SQL database.
         setMessages([
             { id: 0, role: 'assistant', content: "Namaste. I am your ZenFlow AI Mentor. How can I guide your practice today?", timestamp: new Date() }
         ]);
@@ -61,91 +58,95 @@ export function Coach({ user, backendUrl }) {
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="pt-32 pb-20 px-6 min-h-screen font-sans"
-        >
-            <div className="max-w-5xl mx-auto h-[calc(100vh-16rem)] flex flex-col">
-                {/* Header */}
-                <motion.div
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    className="text-center mb-8"
-                >
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                        <Bot className="w-10 h-10 text-white" />
-                    </div>
-                    <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                        AI Mentor
-                    </h1>
-                    <p className="text-white/60">Guidance tailored to your path</p>
-                </motion.div>
+        <div className="relative w-full h-[100dvh] flex flex-col pt-20 md:pt-24 font-sans bg-[#080313] overflow-hidden">
+            
+            {/* Simple Header */}
+            <div className="w-full max-w-4xl mx-auto px-4 md:px-8 shrink-0 mb-2 md:mb-6 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <Bot className="w-4 h-4 text-white" />
+                </div>
+                <h1 className="text-lg md:text-xl font-medium text-gray-200 tracking-tight">
+                    AI Mentor
+                </h1>
+            </div>
 
-                {/* Chat Container */}
-                <div className="flex-1 relative flex flex-col min-h-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                    <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
-                        <AnimatePresence>
-                            {messages.map((m) => (
-                                <motion.div
-                                    key={m.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className={`flex gap-4 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
-                                >
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${m.role === 'user' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'
-                                        }`}>
-                                        {m.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
-                                    </div>
-                                    <div className={`max-w-[80%] rounded-2xl p-4 ${m.role === 'user' ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-white/5 border border-white/10'
-                                        }`}>
-                                        <p className="text-white/90 whitespace-pre-line leading-relaxed">{m.content}</p>
-                                        <p className="text-[10px] text-white/30 mt-2 uppercase tracking-widest">
-                                            {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                        {isTyping && (
-                            <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                                    <Bot className="w-5 h-5" />
-                                </div>
-                                <div className="bg-white/5 rounded-2xl p-4 flex gap-1 items-center">
-                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce"></div>
-                                </div>
-                            </div>
-                        )}
-                        <div ref={messagesEndRef} />
-                    </div>
-
-                    {/* Input Area */}
-                    <div className="p-6 bg-black/20 border-t border-white/10">
-                        <div className="flex gap-3">
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                placeholder="Seek guidance..."
-                                className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-purple-500/50 transition-all font-medium"
-                            />
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => handleSend()}
-                                disabled={!input.trim()}
-                                className="px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl disabled:opacity-50 transition-all shadow-lg shadow-blue-500/20"
+            {/* Scrollable Messages Area */}
+            <div className="flex-1 overflow-y-auto scroll-smooth px-4 md:px-8 pb-40">
+                <div className="max-w-4xl mx-auto space-y-8 md:space-y-10">
+                    <AnimatePresence initial={false}>
+                        {messages.map((m) => (
+                            <motion.div
+                                key={m.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                             >
-                                <Send className="w-5 h-5 text-white" />
-                            </motion.button>
-                        </div>
-                    </div>
+                                {m.role === 'user' ? (
+                                    // User Message: Gemini style (subtle bubble)
+                                    <div className="bg-white/10 text-gray-100 px-6 py-3.5 rounded-3xl max-w-[85%] md:max-w-[75%] text-sm md:text-base leading-relaxed">
+                                        {m.content}
+                                    </div>
+                                ) : (
+                                    // AI Message: Gemini style (No bubble, just text with icon)
+                                    <div className="flex gap-4 md:gap-6 max-w-full md:max-w-[95%]">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-md">
+                                            <Bot className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                                        </div>
+                                        <div className="flex-1 text-gray-200 leading-relaxed pt-1 md:pt-2 text-sm md:text-base whitespace-pre-line">
+                                            {m.content}
+                                        </div>
+                                    </div>
+                                )}
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    
+                    {/* Typing Indicator */}
+                    {isTyping && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="flex gap-4 md:gap-6 max-w-4xl mx-auto"
+                        >
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-md">
+                                <Bot className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                            </div>
+                            <div className="flex gap-2 items-center pt-3 md:pt-4">
+                                <div className="w-2 h-2 bg-purple-400/60 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                <div className="w-2 h-2 bg-purple-400/60 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                <div className="w-2 h-2 bg-purple-400/60 rounded-full animate-bounce"></div>
+                            </div>
+                        </motion.div>
+                    )}
+                    <div ref={messagesEndRef} className="h-4" />
                 </div>
             </div>
-        </motion.div>
+
+            {/* Floating Input Area */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#080313] via-[#080313] to-transparent pt-12 pb-6 px-4 md:px-8 pointer-events-none">
+                <div className="max-w-4xl mx-auto relative flex flex-col items-center pointer-events-auto">
+                    <div className="relative w-full flex items-center">
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                            placeholder="Ask AI Mentor..."
+                            className="w-full bg-[#1a1325]/80 backdrop-blur-xl border border-white/10 rounded-full pl-6 pr-14 py-4 md:py-5 text-gray-200 placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:bg-[#1a1325] transition-all font-medium shadow-2xl"
+                        />
+                        <button
+                            onClick={() => handleSend()}
+                            disabled={!input.trim() || isTyping}
+                            className="absolute right-2 p-3 bg-white text-black rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:bg-gray-200 hover:scale-[1.05] active:scale-[0.95] flex items-center justify-center"
+                        >
+                            <Send className="w-4 h-4 md:w-5 md:h-5" />
+                        </button>
+                    </div>
+                    <p className="text-center text-[10px] text-gray-500 mt-3">
+                        AI Mentor can make mistakes. Consider verifying important information.
+                    </p>
+                </div>
+            </div>
+        </div>
     );
 }
