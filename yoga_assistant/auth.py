@@ -9,19 +9,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Config ---
-# Ensure you generate a secure random key for production
-# Run: openssl rand -hex 32
-# SECRET_KEY = os.getenv("SECRET_KEY", "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7")
-
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable must be set") 
     
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 # Increased to 60 for better dev experience
 
 # --- Password Hashing ---
-# Using pbkdf2_sha256 for better compatibility across environments
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 class Token(BaseModel):
@@ -29,8 +24,8 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
+    # This matches what we will extract during the BOLA check
     username: Optional[str] = None
-    user_id: Optional[int] = None
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -40,11 +35,31 @@ def get_password_hash(password):
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
+    
+    # Ensure the username is the 'sub' claim (standard for JWT)
+    if "username" in to_encode and "sub" not in to_encode:
+        to_encode["sub"] = to_encode["username"]
+        
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+# --- The BOLA Shield Dependency ---
+def get_current_user(token: str):
+    """
+    Decodes the token and returns the username.
+    This will be used in main.py to compare against URL parameters.
+    """
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            return None
+        return username
+    except JWTError:
+        return None

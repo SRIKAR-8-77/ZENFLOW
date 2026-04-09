@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react'; 
+import { useParams, Navigate } from 'react-router-dom'; // Added for URL context
+import { motion, AnimatePresence } from 'framer-motion'; 
 import { Library as LibraryIcon, Search, Filter, BookOpen, Clock, Activity, ChevronRight } from 'lucide-react';
 
-export function Library({ backendUrl }) {
+export function Library({ user, backendUrl }) {
+    const { username } = useParams(); // Get username from URL
     const [exercises, setExercises] = useState([]);
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('All');
     const [selectedPose, setSelectedPose] = useState(null);
+
+    // FRONTEND BOLA PROTECTION
+    // Keeps the vault experience tied to the logged-in user
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/library`} replace />;
+    }
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -37,7 +45,8 @@ export function Library({ backendUrl }) {
                         <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-emerald-400 to-cyan-400">
                             The Vault
                         </h1>
-                        <p className="text-xl text-white/60">A repository of sacred movements.</p>
+                        {/* Personalized Subtitle */}
+                        <p className="text-xl text-white/60">A repository of sacred movements for {username}.</p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -109,7 +118,7 @@ export function Library({ backendUrl }) {
                     </AnimatePresence>
                 </div>
 
-                {/* Modal-like Detail View */}
+                {/* Modal Detail View */}
                 <AnimatePresence>
                     {selectedPose && (
                         <div className="fixed inset-0 z-[60] flex items-center justify-center p-6">

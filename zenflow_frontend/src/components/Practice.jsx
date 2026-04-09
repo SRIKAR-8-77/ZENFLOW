@@ -1,8 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useNavigate, useParams, Navigate } from 'react-router-dom'; // Added useParams and Navigate
+import { motion, AnimatePresence } from 'framer-motion'; 
 import { Camera, Play, Upload, RotateCcw, Sparkles, Target, Zap, AlertCircle } from 'lucide-react';
 
-export function Practice({ user, backendUrl, onAnalysisComplete }) {
+export function Practice({ user, backendUrl }) {
+    const navigate = useNavigate();
+    const { username } = useParams(); // Get username from URL
+    
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -10,6 +14,12 @@ export function Practice({ user, backendUrl, onAnalysisComplete }) {
     const [currentResultIndex, setCurrentResultIndex] = useState(0);
     const [isHovering, setIsHovering] = useState(false);
     const fileInputRef = useRef(null);
+
+    // FRONTEND BOLA PROTECTION
+    // If the URL username doesn't match the logged-in user, redirect them to their own lab
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/practice`} replace />;
+    }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -39,7 +49,9 @@ export function Practice({ user, backendUrl, onAnalysisComplete }) {
             if (response.ok) {
                 const data = await response.json();
                 setAnalysisResult(data);
-                if (onAnalysisComplete) onAnalysisComplete();
+                
+                // Example of personalized navigation if needed later:
+                // setTimeout(() => navigate(`/${user.username}/journal`), 5000); 
             } else {
                 const data = await response.json();
                 setError(data.detail || 'The digital temple is busy. Try again later.');
@@ -55,6 +67,8 @@ export function Practice({ user, backendUrl, onAnalysisComplete }) {
         setSelectedFile(null);
         setAnalysisResult(null);
         setError('');
+        // Ensure we stay on the personalized URL after reset
+        navigate(`/${username}/practice`);
     };
 
     return (
@@ -103,11 +117,6 @@ export function Practice({ user, backendUrl, onAnalysisComplete }) {
                             }
                         }}
                     >
-                        {/* Ambient Glow on Hover */}
-                        {!selectedFile && !analysisResult && (
-                            <div className={`absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-                        )}
-
                         <div className="relative z-10 flex flex-col items-center w-full h-full p-8">
                             <AnimatePresence mode="wait">
                                 {!selectedFile && !analysisResult ? (
