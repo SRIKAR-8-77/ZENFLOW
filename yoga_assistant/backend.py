@@ -64,15 +64,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
     return user
 
-
-def verify_user_authorization(username_in_url: str, current_user: User):
-    """Checks if the token holder matches the username in the URL."""
-    if current_user.username != username_in_url:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail="Access Denied: This is not your sanctuary."
-        )
-    
 # --- Fast API Initialization ---
 app = FastAPI()
 
@@ -588,6 +579,8 @@ async def get_exercises():
             if key == "alanasana":
                 continue
             
+            # Match key to image filename
+            # e.g. adho_mukha_svanasana -> Adho Mukha Svanasana.jpeg/jpg
             display_name = key.replace("_", " ").title()
             thumbnail = ""
             for img in images:

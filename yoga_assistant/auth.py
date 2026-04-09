@@ -26,6 +26,7 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     # This matches what we will extract during the BOLA check
     username: Optional[str] = None
+    user_id: Optional[int] = None
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
