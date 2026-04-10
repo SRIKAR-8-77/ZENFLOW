@@ -11,10 +11,11 @@ export function Coach({ user, backendUrl }) {
     const messagesEndRef = useRef(null);
 
       useEffect(() => {
+         if (!user) return;
         setMessages([
             { id: 0, role: 'assistant', content: `Namaste, ${user.username}. I am your ZenFlow AI Mentor. How can I guide your practice today?`, timestamp: new Date() }
         ]);
-    }, [username]);
+    }, [username,user]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

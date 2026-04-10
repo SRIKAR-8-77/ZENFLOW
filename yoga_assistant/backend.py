@@ -44,7 +44,7 @@ def get_db():
         db.close()
         
 def verify_user(username_in_url: str, authenticated_user: User):
-    if authenticated_user.username != username_in_url:
+    if authenticated_user.username.lower() != username_in_url.lower():
         raise HTTPException(
             status_code=403, 
             detail="Access Denied: This sanctuary belongs to someone else."

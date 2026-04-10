@@ -76,7 +76,7 @@ export function Journal({ user, backendUrl }) {
 
     // Case-insensitive BOLA redirect
     if (user.username.toLowerCase() !== username.toLowerCase()) {
-        return <Navigate to={`/${user.username.toLowerCase()}/journal`} replace />;
+        return <Navigate to={`/${user.username}/journal`} replace />;
     }
 
     const handleSave = async () => {
