@@ -18,7 +18,7 @@ export function Progress({ user, backendUrl }) {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
             try {
-                const response = await fetch(`${backendUrl}/get-sessions/`, {
+                const response = await fetch(`${backendUrl}/${user.username}/get-sessions/`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) setSessions(await response.json());

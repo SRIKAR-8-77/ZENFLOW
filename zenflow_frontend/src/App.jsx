@@ -81,10 +81,10 @@ export default function App() {
                 <Route path="/:username/progress" element={<Progress  user={user} backendUrl={BACKEND_URL} />} />
                 
                 {/* If the user hits the root '/', redirect them to their specific sanctuary */}
-                <Route path="/" element={<Navigate to={`/${user.username}`} replace />} />
+                <Route path="/" element={<Navigate to={`/${encodeURIComponent(user.username)}`} replace />} />  
                 
                 {/* Fallback for weird URLs: send them home */}
-                <Route path="*" element={<Navigate to={`/${user.username}`} replace />} />
+                <Route path="*" element={<Navigate to={`/${encodeURIComponent(user.username)}`} replace />} />
               </Routes>
             </AnimatePresence>
           </main>

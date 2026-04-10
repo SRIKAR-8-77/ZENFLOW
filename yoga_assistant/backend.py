@@ -42,6 +42,14 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+def verify_user(username_in_url: str, authenticated_user: User):
+    if authenticated_user.username != username_in_url:
+        raise HTTPException(
+            status_code=403, 
+            detail="Access Denied: This sanctuary belongs to someone else."
+        )
+
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
@@ -239,12 +247,14 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 
 # --- APP ENDPOINTS ---
 
-@app.post("/upload-image/")
+@app.post("/{username}/upload-image/")
 async def upload_image(
+        username: str,
         file: UploadFile = File(...),
         current_user: User = Depends(get_current_user),
         db: Session = Depends(get_db)
 ):
+    verify_user(username, current_user)
     try:
         if model is None or landmarker is None:
              raise HTTPException(status_code=500, detail="Server models not initialized correctly.")
@@ -306,13 +316,14 @@ async def upload_image(
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/analyze-session/")
+@app.post("/{username}/analyze-session/")
 async def analyze_session(
+    username: str,
     file: UploadFile = File(...),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Analyzes a video clip, detects all poses, and calculates held duration for each."""
+    verify_user(username, current_user)
     try:
         if model is None or landmarker is None:
             raise HTTPException(status_code=500, detail="Server models not initialized.")
@@ -426,12 +437,14 @@ async def analyze_session(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/submit-feedback/")
+@app.post("/{username}/submit-feedback/")
 async def submit_feedback(
+        username: str,
         feedback_req: FeedbackRequest,
         current_user: User = Depends(get_current_user),
         db: Session = Depends(get_db)
 ):
+    verify_user(username, current_user)
     try:
         analysis = analyze_feedback_text(feedback_req.feedback)
         
@@ -448,12 +461,14 @@ async def submit_feedback(
         raise HTTPException(status_code=500, detail=f"Error processing feedback: {e}")
 
 
-@app.post("/add-journal-entry/")
+@app.post("/{username}/add-journal-entry/")
 async def add_journal_entry(
+        username: str,
         entry_req: JournalEntryRequest,
         current_user: User = Depends(get_current_user),
         db: Session = Depends(get_db)
 ):
+    verify_user(username, current_user)
     try:
         new_entry = JournalEntry(
             user_id=current_user.id,
@@ -468,25 +483,29 @@ async def add_journal_entry(
         raise HTTPException(status_code=500, detail=f"Error adding journal entry: {e}")
 
 
-@app.get("/get-sessions/")
-async def get_sessions(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.get("/{username}/get-sessions/")
+async def get_sessions(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     sessions = db.query(YogaSession).filter(YogaSession.user_id == current_user.id).order_by(YogaSession.date.desc()).all()
     return sessions
 
 
-@app.get("/get-journal-entries/")
-async def get_journal_entries(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.get("/{username}/get-journal-entries/")
+async def get_journal_entries(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     entries = db.query(JournalEntry).filter(JournalEntry.user_id == current_user.id).order_by(JournalEntry.date.desc()).all()
     return entries
 
-@app.get("/get-coach-history/")
-async def get_coach_history(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.get("/{username}/get-coach-history/")
+async def get_coach_history(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     # Assuming coach history is stored in ChatHistory table now
     history = db.query(ChatHistory).filter(ChatHistory.user_id == current_user.id).order_by(ChatHistory.created_date.desc()).all()
     return history
 
-@app.post("/ask-gemini/")
-async def ask_gemini(data: QueryModel, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.post("/{username}/ask-gemini/")
+async def ask_gemini(username: str, data: QueryModel, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     user_query = data.query
     if not user_query:
         raise HTTPException(status_code=422, detail="Query cannot be empty")
@@ -514,8 +533,9 @@ async def ask_gemini(data: QueryModel, current_user: User = Depends(get_current_
         print(f"Error in ask-gemini endpoint: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@app.get("/get-calendar/")
-async def get_calendar(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.get("/{username}/get-calendar/")
+async def get_calendar(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     try:
         sessions = db.query(YogaSession).filter(YogaSession.user_id == current_user.id).all()
         plans = db.query(CalendarPlan).filter(CalendarPlan.user_id == current_user.id).all()
@@ -523,8 +543,9 @@ async def get_calendar(current_user: User = Depends(get_current_user), db: Sessi
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/approve-plan/")
-async def approve_plan(req: ApprovePlanRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.post("/{username}/approve-plan/")
+async def approve_plan(username: str, req: ApprovePlanRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     try:
         for item in req.plans:
             new_plan = CalendarPlan(
@@ -541,8 +562,9 @@ async def approve_plan(req: ApprovePlanRequest, current_user: User = Depends(get
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/get-streak/")
-async def get_streak(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+@app.get("/{username}/get-streak/")
+async def get_streak(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    verify_user(username, current_user)
     try:
         session_dates = db.query(YogaSession.date).filter(YogaSession.user_id == current_user.id).order_by(YogaSession.date.desc()).all()
         if not session_dates:

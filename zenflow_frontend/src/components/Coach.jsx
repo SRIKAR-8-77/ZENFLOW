@@ -38,7 +38,7 @@ export function Coach({ user, backendUrl }) {
         setIsTyping(true);
 
         try {
-            const response = await fetch(`${backendUrl}/ask-gemini/`, {
+            const response = await fetch(`${backendUrl}/${user.username}/ask-gemini/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

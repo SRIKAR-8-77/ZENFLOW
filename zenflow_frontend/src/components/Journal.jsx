@@ -21,7 +21,7 @@ export function Journal({ user, backendUrl }) {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
             try {
-                const response = await fetch(`${backendUrl}/get-journal-entries/`, {
+                const response = await fetch(`${backendUrl}/${user.username}/get-journal-entries/`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) setHistory(await response.json());
@@ -35,7 +35,7 @@ export function Journal({ user, backendUrl }) {
         setIsSaving(true);
         const token = localStorage.getItem('zenflow_token');
         try {
-            const response = await fetch(`${backendUrl}/add-journal-entry/`, {
+            const response = await fetch(`${backendUrl}/${user.username}/add-journal-entry/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export function Journal({ user, backendUrl }) {
             });
             if (response.ok) {
                 setEntry('');
-                const fresh = await fetch(`${backendUrl}/get-journal-entries/`, {
+                const fresh = await fetch(`${backendUrl}/${user.username}/get-journal-entries/`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (fresh.ok) setHistory(await fresh.json());

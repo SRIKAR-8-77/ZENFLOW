@@ -61,7 +61,7 @@ export function AICoach({ user, backendUrl, refreshChats }) {
         try {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
-            const res = await fetch(`${backendUrl}/approve-plan/`, {
+            const res = await fetch(`${backendUrl}/${user.username}/approve-plan/`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ plans: planData }),

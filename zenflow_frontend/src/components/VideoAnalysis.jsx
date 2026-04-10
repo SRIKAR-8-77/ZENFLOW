@@ -26,7 +26,7 @@ export function VideoAnalysis({ onAnalysisComplete, user, backendUrl }) {
             const formData = new FormData();
             formData.append('file', selectedFile);
 
-            const response = await fetch(`${backendUrl}/analyze-session/`, {
+            const response = await fetch(`${backendUrl}/${user.username}/analyze-session/`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData

@@ -50,8 +50,8 @@ export function Dashboard({ user, backendUrl }) {
 
             try {
                 const [sessionsRes, streakRes] = await Promise.all([
-                    fetch(`${backendUrl}/get-sessions/`, { headers: { Authorization: `Bearer ${token}` } }),
-                    fetch(`${backendUrl}/get-streak/`, { headers: { Authorization: `Bearer ${token}` } })
+                    fetch(`${backendUrl}/${user.username}/get-sessions/`, { headers: { Authorization: `Bearer ${token}` } }),
+                    fetch(`${backendUrl}/${user.username}/get-streak/`, { headers: { Authorization: `Bearer ${token}` } })
                 ]);
 
                 if (sessionsRes.ok) setSessions(await sessionsRes.json());

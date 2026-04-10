@@ -40,7 +40,7 @@ export function Practice({ user, backendUrl }) {
         const token = localStorage.getItem('zenflow_token');
 
         try {
-            const response = await fetch(`${backendUrl}/analyze-session/`, {
+            const response = await fetch(`${backendUrl}/${user.username}/analyze-session/`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData
