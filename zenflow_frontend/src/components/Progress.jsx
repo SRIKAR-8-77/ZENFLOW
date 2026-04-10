@@ -9,9 +9,7 @@ export function Progress({ user, backendUrl }) {
     const [sessions, setSessions] = useState([]);
 
   
-    if (user && user.username !== username) {
-        return <Navigate to={`/${user.username}/progress`} replace />;
-    }
+   
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -31,7 +29,10 @@ export function Progress({ user, backendUrl }) {
         date: new Date(s.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
         accuracy: Math.round(s.accuracy_score)
     }));
-
+    
+     if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/progress`} replace />;
+    }
     return (
         <motion.div
             initial={{ opacity: 0 }}

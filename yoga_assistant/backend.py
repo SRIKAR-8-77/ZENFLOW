@@ -622,3 +622,4 @@ async def get_exercises():
     except Exception as e:
         print(f"Error fetching exercises: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+

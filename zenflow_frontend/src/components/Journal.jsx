@@ -1,34 +1,83 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Sparkles, Send, Heart, Calendar, ArrowRight, Zap, Waves, Target, Cloud } from 'lucide-react';
+import { useParams, Navigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, Calendar, ArrowRight, Zap, Waves, Target, Cloud, Heart } from 'lucide-react';
 
 export function Journal({ user, backendUrl }) {
+    const { username } = useParams();
     const [entry, setEntry] = useState('');
     const [history, setHistory] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
     const [selectedMood, setSelectedMood] = useState('Focused');
 
-    // Replaced emojis with premium Lucide icons and specific glow colors
-    const moods = [
-        { name: 'Energized', icon: Zap, activeColor: 'text-yellow-400', activeBg: 'bg-yellow-400/10', border: 'border-yellow-400/50', shadow: 'shadow-yellow-500/20' },
-        { name: 'Calm', icon: Waves, activeColor: 'text-blue-400', activeBg: 'bg-blue-400/10', border: 'border-blue-400/50', shadow: 'shadow-blue-500/20' },
-        { name: 'Focused', icon: Target, activeColor: 'text-purple-400', activeBg: 'bg-purple-400/10', border: 'border-purple-400/50', shadow: 'shadow-purple-500/20' },
-        { name: 'Peaceful', icon: Cloud, activeColor: 'text-teal-400', activeBg: 'bg-teal-400/10', border: 'border-teal-400/50', shadow: 'shadow-teal-500/20' }
-    ];
+    // 1. Enhanced Mood Theme Configuration
+    // Higher opacities for darker colors to ensure they pop against the sanctuary background
+    const moodConfigs = {
+        'Energized': { 
+            icon: Zap, 
+            color: 'text-yellow-400', 
+            bg: 'bg-yellow-400/10', 
+            border: 'border-yellow-400/30', 
+            hoverBorder: 'group-hover:border-yellow-400/80',
+            glow: 'group-hover:shadow-[0_0_30px_rgba(250,204,21,0.3)]' 
+        },
+        'Calm': { 
+            icon: Waves, 
+            color: 'text-blue-400', 
+            bg: 'bg-blue-400/10', 
+            border: 'border-blue-400/40', // Slightly higher base opacity
+            hoverBorder: 'group-hover:border-blue-400/90',
+            glow: 'group-hover:shadow-[0_0_35px_rgba(96,165,250,0.35)]' 
+        },
+        'Focused': { 
+            icon: Target, 
+            color: 'text-purple-400', 
+            bg: 'bg-purple-400/10', 
+            border: 'border-purple-400/40', 
+            hoverBorder: 'group-hover:border-purple-400/90',
+            glow: 'group-hover:shadow-[0_0_35px_rgba(192,132,252,0.35)]' 
+        },
+        'Peaceful': { 
+            icon: Cloud, 
+            color: 'text-teal-400', 
+            bg: 'bg-teal-400/10', 
+            border: 'border-teal-400/40', 
+            hoverBorder: 'group-hover:border-teal-400/90',
+            glow: 'group-hover:shadow-[0_0_35px_rgba(45,212,191,0.35)]' 
+        }
+    };
 
+    // 2. Data Fetching with BOLA Guard
     useEffect(() => {
-        const fetchHistory = async () => {
-            const token = localStorage.getItem('zenflow_token');
-            if (!token) return;
-            try {
-                const response = await fetch(`${backendUrl}/${user.username}/get-journal-entries/`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (response.ok) setHistory(await response.json());
-            } catch (e) { console.error(e); }
-        };
-        fetchHistory();
-    }, [backendUrl]);
+        if (user && user.username.toLowerCase() === username.toLowerCase()) {
+            const fetchHistory = async () => {
+                const token = localStorage.getItem('zenflow_token');
+                try {
+                    const response = await fetch(`${backendUrl}/${username}/get-journal-entries/`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (response.ok) setHistory(await response.json());
+                } catch (e) { console.error("Journal Fetch Error:", e); }
+            };
+            fetchHistory();
+        }
+    }, [backendUrl, user, username]);
+
+    // 3. Early Returns (Authentication & Redirects)
+    if (!user) {
+        return (
+            <div className="min-h-screen bg-[#080313] flex items-center justify-center">
+                <div className="animate-pulse text-purple-400 font-medium tracking-widest uppercase text-sm">
+                    Opening Sanctuary...
+                </div>
+            </div>
+        );
+    }
+
+    // Case-insensitive BOLA redirect
+    if (user.username.toLowerCase() !== username.toLowerCase()) {
+        return <Navigate to={`/${user.username.toLowerCase()}/journal`} replace />;
+    }
 
     const handleSave = async () => {
         if (!entry.trim()) return;
@@ -50,17 +99,13 @@ export function Journal({ user, backendUrl }) {
                 });
                 if (fresh.ok) setHistory(await fresh.json());
             }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setIsSaving(false);
-        }
+        } catch (e) { console.error(e); }
+        finally { setIsSaving(false); }
     };
 
     return (
         <div className="w-full max-w-5xl mx-auto px-4 md:px-8 py-12 lg:py-20 font-sans">
-            {/* Header */}
-            <header className="text-center mb-8 mt-8" >
+            <header className="text-center mb-8 mt-8">
                 <motion.h1 
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -70,47 +115,33 @@ export function Journal({ user, backendUrl }) {
                         Reflections
                     </span>
                 </motion.h1>
-                <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-gray-400 text-lg italic"
-                >
-                    Writing as a meditative act.
-                </motion.p>
+                <p className="text-gray-400 text-lg italic">Writing as a meditative act.</p>
             </header>
 
             <div className="flex flex-col gap-12">
                 {/* Entry Workspace */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="relative group"
-                >
-                    {/* Ambient Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-orange-500/5 rounded-[2rem] blur-2xl pointer-events-none transition-all duration-500 group-hover:from-pink-500/10 group-hover:to-orange-500/10" />
-                    
-                    <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 md:p-10 overflow-hidden transition-colors hover:bg-white/[0.03]">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-orange-500/5 rounded-[2rem] blur-2xl pointer-events-none" />
+                    <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 md:p-10 transition-colors hover:bg-white/[0.03]">
                         
-                        {/* Mood Selector */}
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 border-b border-white/5 pb-8">
                             <div className="flex flex-wrap gap-3 md:gap-4">
-                                {moods.map((m) => {
-                                    const isSelected = selectedMood === m.name;
+                                {Object.keys(moodConfigs).map((mKey) => {
+                                    const m = moodConfigs[mKey];
+                                    const isSelected = selectedMood === mKey;
                                     const Icon = m.icon;
                                     return (
                                         <button
-                                            key={m.name}
-                                            onClick={() => setSelectedMood(m.name)}
+                                            key={mKey}
+                                            onClick={() => setSelectedMood(mKey)}
                                             className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border
                                                 ${isSelected 
-                                                    ? `${m.activeBg} ${m.border} ${m.activeColor} shadow-lg ${m.shadow} scale-105` 
+                                                    ? `${m.bg} ${m.border.replace('/30', '/60').replace('/40', '/60')} ${m.color} shadow-lg scale-105` 
                                                     : 'bg-white/5 border-white/5 text-gray-500 hover:bg-white/10 hover:text-gray-300'
                                                 }`}
                                         >
-                                            <Icon className={`w-6 h-6 md:w-8 md:h-8 mb-2 ${isSelected ? m.activeColor : 'text-current'}`} strokeWidth={isSelected ? 2.5 : 2} />
-                                            <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest">{m.name}</span>
+                                            <Icon className="w-6 h-6 md:w-8 md:h-8 mb-2" strokeWidth={isSelected ? 2.5 : 2} />
+                                            <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest">{mKey}</span>
                                         </button>
                                     );
                                 })}
@@ -118,7 +149,6 @@ export function Journal({ user, backendUrl }) {
                             <p className="text-gray-500 text-sm italic font-medium">How is your energy flowing today?</p>
                         </div>
 
-                        {/* Text Area */}
                         <textarea
                             value={entry}
                             onChange={(e) => setEntry(e.target.value)}
@@ -126,12 +156,11 @@ export function Journal({ user, backendUrl }) {
                             className="w-full h-56 md:h-64 bg-transparent border-none focus:ring-0 outline-none text-xl md:text-2xl text-gray-200 placeholder-gray-600 resize-none font-medium leading-relaxed"
                         />
 
-                        {/* Action Footer */}
                         <div className="mt-8 flex justify-end pt-6 border-t border-white/5">
                             <button
                                 onClick={handleSave}
                                 disabled={isSaving || !entry.trim()}
-                                className="group flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="group flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-gray-200 transition-all disabled:opacity-50"
                             >
                                 {isSaving ? 'Preserving Presence...' : 'Save Reflection'}
                                 {!isSaving && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
@@ -140,13 +169,8 @@ export function Journal({ user, backendUrl }) {
                     </div>
                 </motion.div>
 
-                {/* Past Reflections */}
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-8"
-                >
+                {/* Chronicle History with Fixed Aura UI */}
+                <div className="mt-8">
                     <div className="flex items-center gap-3 mb-8 px-2">
                         <Calendar className="w-5 h-5 text-gray-400" />
                         <h3 className="text-xl font-bold text-white tracking-tight">Chronicle</h3>
@@ -154,40 +178,49 @@ export function Journal({ user, backendUrl }) {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <AnimatePresence>
-                            {history.map((h, idx) => (
-                                <motion.div
-                                    key={h.id || idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-3xl p-6 hover:bg-white/[0.04] hover:border-white/10 transition-all cursor-pointer group flex flex-col h-full"
-                                >
-                                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">
-                                        {new Date(h.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                                    </div>
-                                    <p className="text-gray-300 line-clamp-4 leading-relaxed text-sm mb-6 flex-grow group-hover:text-white transition-colors">
-                                        {h.entry_text}
-                                    </p>
-                                    <div className="pt-4 border-t border-white/5 flex items-center justify-between mt-auto">
-                                        <Heart className="w-4 h-4 text-gray-600 group-hover:text-pink-500 transition-colors" />
-                                        <span className="text-[9px] text-gray-500 uppercase font-black tracking-widest">Memory Logged</span>
-                                    </div>
-                                </motion.div>
-                            ))}
-                            {history.length === 0 && (
-                            <motion.div 
-                                    key="empty-state"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                   className="col-span-full text-center py-12 border border-dashed border-white/10 rounded-3xl bg-white/[0.01]"
-                                >
-                                    <BookOpen className="w-8 h-8 text-gray-600 mx-auto mb-3" />
-                                    <p className="text-gray-500 text-sm">Your chronicle is empty. Begin your journey above.</p>
-                                </motion.div>
-                            )}
+                            {history.map((h, idx) => {
+                                // Extract mood from entry text
+                                const moodMatch = h.entry_text.match(/^\[Mood:\s*(.*?)\]\s*(.*)/s);
+                                const rawMood = moodMatch ? moodMatch[1] : 'Focused';
+                                const mainContent = moodMatch ? moodMatch[2] : h.entry_text;
+
+                                // Case-insensitive lookup to ensure theme is found
+                                const moodKey = Object.keys(moodConfigs).find(k => k.toLowerCase() === rawMood.toLowerCase()) || 'Focused';
+                                const theme = moodConfigs[moodKey];
+
+                                return (
+                                    <motion.div
+                                        key={h.id || idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        whileHover={{ scale: 1.04, y: -8 }}
+                                        className={`group relative bg-white/[0.02] backdrop-blur-xl border rounded-3xl p-6 transition-all duration-300 flex flex-col h-full cursor-default ${theme.border} ${theme.hoverBorder} ${theme.glow}`}
+                                    >
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                                                {new Date(h.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                            </div>
+                                            <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded-md bg-white/5 ${theme.color}`}>
+                                                {moodKey}
+                                            </span>
+                                        </div>
+
+                                        <p className="text-gray-300 line-clamp-6 leading-relaxed text-sm mb-6 flex-grow group-hover:text-white transition-colors">
+                                            {mainContent}
+                                        </p>
+
+                                        <div className="pt-4 border-t border-white/5 flex items-center justify-between mt-auto">
+                                            <Heart className={`w-4 h-4 transition-all duration-300 ${theme.color} opacity-20 group-hover:opacity-100 group-hover:scale-110`} />
+                                            <span className="text-[9px] text-gray-500 uppercase font-black tracking-widest group-hover:text-gray-400 transition-colors">
+                                                Memory Logged
+                                            </span>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
                         </AnimatePresence>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     );

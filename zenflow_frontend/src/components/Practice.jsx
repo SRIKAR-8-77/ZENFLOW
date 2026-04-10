@@ -15,11 +15,7 @@ export function Practice({ user, backendUrl }) {
     const [isHovering, setIsHovering] = useState(false);
     const fileInputRef = useRef(null);
 
-    // FRONTEND BOLA PROTECTION
-    // If the URL username doesn't match the logged-in user, redirect them to their own lab
-    if (user && user.username !== username) {
-        return <Navigate to={`/${user.username}/practice`} replace />;
-    }
+    
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -62,7 +58,11 @@ export function Practice({ user, backendUrl }) {
             setIsLoading(false);
         }
     };
-
+    // FRONTEND BOLA PROTECTION
+    // If the URL username doesn't match the logged-in user, redirect them to their own lab
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/practice`} replace />;
+    }
     const reset = () => {
         setSelectedFile(null);
         setAnalysisResult(null);

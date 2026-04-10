@@ -10,11 +10,7 @@ export function Library({ user, backendUrl }) {
     const [filter, setFilter] = useState('All');
     const [selectedPose, setSelectedPose] = useState(null);
 
-    // FRONTEND BOLA PROTECTION
-    // Keeps the vault experience tied to the logged-in user
-    if (user && user.username !== username) {
-        return <Navigate to={`/${user.username}/library`} replace />;
-    }
+    
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -32,7 +28,11 @@ export function Library({ user, backendUrl }) {
         (filter === 'All' || ex.category === filter) &&
         ex.name.toLowerCase().includes(search.toLowerCase())
     );
-
+    // FRONTEND BOLA PROTECTION
+    // Keeps the vault experience tied to the logged-in user
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/library`} replace />;
+    }
     return (
         <motion.div
             initial={{ opacity: 0 }}

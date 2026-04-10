@@ -34,11 +34,7 @@ export function Dashboard({ user, backendUrl }) {
     const [streak, setStreak] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    // FRONTEND BOLA PROTECTION
-    // If the URL name doesn't match the logged-in user, redirect them back to their own sanctuary
-    if (user && user.username !== username) {
-        return <Navigate to={`/${user.username}`} replace />;
-    }
+   
 
     useEffect(() => {
         const fetchData = async () => {
@@ -68,6 +64,11 @@ export function Dashboard({ user, backendUrl }) {
 
         fetchData();
     }, [backendUrl]);
+
+
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}`} replace />;
+    }
 
     const avgAccuracy = sessions.length > 0
         ? Math.round(sessions.reduce((acc, s) => acc + (s.accuracy_score || 0), 0) / sessions.length)

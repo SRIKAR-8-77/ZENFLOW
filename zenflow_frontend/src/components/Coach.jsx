@@ -10,13 +10,9 @@ export function Coach({ user, backendUrl }) {
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
 
-    if (user && user.username !== username) {
-        return <Navigate to={`/${user.username}/coach`} replace />;
-    }
-
-    useEffect(() => {
+      useEffect(() => {
         setMessages([
-            { id: 0, role: 'assistant', content: `Namaste, ${username}. I am your ZenFlow AI Mentor. How can I guide your practice today?`, timestamp: new Date() }
+            { id: 0, role: 'assistant', content: `Namaste, ${user.username}. I am your ZenFlow AI Mentor. How can I guide your practice today?`, timestamp: new Date() }
         ]);
     }, [username]);
 
@@ -27,6 +23,12 @@ export function Coach({ user, backendUrl }) {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/coach`} replace />;
+    }
+
+  
 
     const handleSend = async (message = input) => {
        if (isTyping || !message.trim()) return;
