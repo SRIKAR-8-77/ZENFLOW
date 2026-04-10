@@ -48,6 +48,7 @@ export function Navigation({ user, onLogout }) {
                                 key={item.id}
                                 // Prefixing the username to create paths like /nallanikhil21/practice
                                 to={user ? `/${user.username}${item.path}` : "/"}
+                                end={item.path === ''}
                                 className={({ isActive }) => `
                                     relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 
                                     ${isActive 

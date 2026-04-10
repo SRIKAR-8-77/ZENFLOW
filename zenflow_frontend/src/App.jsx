@@ -39,7 +39,7 @@ export default function App() {
     localStorage.setItem('zenflow_user', JSON.stringify(userData));
     setUser(userData);
     // Redirect to the personalized username path
-    navigate(`/${userData.username}`); 
+     navigate(`/${encodeURIComponent(userData.username)}`); 
   };
 
   const handleLogout = () => {

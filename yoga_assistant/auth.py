@@ -41,7 +41,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     if "username" in to_encode and "sub" not in to_encode:
         to_encode["sub"] = to_encode["username"]
         
-    if expires_delta:
+     if expires_delta is not None:
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -51,7 +51,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 # --- The BOLA Shield Dependency ---
-def get_current_user(token: str):
+
+class InvalidTokenError(Exception):
+    pass
+
+def get_current_user(token: str) -> str:
     """
     Decodes the token and returns the username.
     This will be used in main.py to compare against URL parameters.
@@ -60,7 +64,7 @@ def get_current_user(token: str):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            return None
+            raise InvalidTokenError("Token missing 'sub' claim")
         return username
-    except JWTError:
-        return None
+   except JWTError as exc:
+       raise InvalidTokenError("Invalid token") from exc
