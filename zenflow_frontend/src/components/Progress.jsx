@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom'; // Added for URL personalization
 import { motion } from 'framer-motion';
 import { TrendingUp, Calendar, Heart, Award, ChevronRight } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export function Progress({ backendUrl }) {
+export function Progress({ user, backendUrl }) {
+    const { username } = useParams(); // Get username from URL
     const [sessions, setSessions] = useState([]);
+
+  
+   
 
     useEffect(() => {
         const fetchHistory = async () => {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
             try {
-                const response = await fetch(`${backendUrl}/get-sessions/`, {
+                const response = await fetch(`${backendUrl}/${user.username}/get-sessions/`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) setSessions(await response.json());
@@ -24,7 +29,10 @@ export function Progress({ backendUrl }) {
         date: new Date(s.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
         accuracy: Math.round(s.accuracy_score)
     }));
-
+    
+     if (user && user.username !== username) {
+        return <Navigate to={`/${user.username}/progress`} replace />;
+    }
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -34,7 +42,7 @@ export function Progress({ backendUrl }) {
             <div className="max-w-7xl mx-auto">
                 <header className="text-center mb-16">
                     <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400">
-                        The Journey
+                      The Journey
                     </h1>
                     <p className="text-xl text-white/60">Visualization of your path to presence.</p>
                 </header>
@@ -122,7 +130,7 @@ export function Progress({ backendUrl }) {
                             </h3>
                             <div className="space-y-6">
                                 {sessions.map((s, idx) => (
-                                    <div key={s.id} className="relative pl-8 border-l border-white/5 pb-6 last:pb-0">
+                                    <div key={s.id || idx} className="relative pl-8 border-l border-white/5 pb-6 last:pb-0">
                                         <div className="absolute left-[-5px] top-0 w-[10px] h-[10px] rounded-full bg-purple-500 shadow-[0_0_10px_#8b5cf6]" />
                                         <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-2">
                                             {new Date(s.date).toLocaleDateString()}

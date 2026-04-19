@@ -21,7 +21,7 @@ export default function FeedbackForm({ sessionId, user, onSubmit }) {
         if (!token) return;
 
         try {
-            const response = await fetch(`${BACKEND_URL}/submit-feedback/`, {
+            const response = await fetch(`${BACKEND_URL}/${user.username}/submit-feedback/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

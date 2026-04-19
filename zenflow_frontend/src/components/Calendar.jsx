@@ -10,8 +10,8 @@ export default function Calendar({ user, backendUrl }) {
             const token = localStorage.getItem('zenflow_token');
             if (!token) return;
             const [calendarRes, streakRes] = await Promise.all([
-                fetch(`${backendUrl}/get-calendar/`, { headers: { 'Authorization': `Bearer ${token}` } }),
-                fetch(`${backendUrl}/get-streak/`, { headers: { 'Authorization': `Bearer ${token}` } })
+                fetch(`${backendUrl}/${user.username}/get-calendar/`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch(`${backendUrl}/${user.username}/get-streak/`, { headers: { 'Authorization': `Bearer ${token}` } })
             ]);
 
             if (calendarRes.ok) {
